@@ -51,7 +51,7 @@ function handleDiagnose(url, res) {
 
   if (mode === 'live') {
     return sendJson(res, 501, {
-      error: 'Live mode is not built yet. Use mode=sample for now.',
+      error: 'Live mode is not built yet. Switch to Sample mode for now.',
     });
   }
 

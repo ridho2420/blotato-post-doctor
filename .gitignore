@@ -3,6 +3,9 @@
 .env.*
 !.env.example
 
+# Local editor/assistant settings
+.claude/
+
 # Dependencies and noise
 node_modules/
 *.log

@@ -128,13 +128,48 @@ test('every catalog entry is complete and has a unique id', () => {
     assert.ok(entry.id, 'entry needs an id');
     assert.ok(!ids.has(entry.id), `duplicate id ${entry.id}`);
     ids.add(entry.id);
-    assert.ok(Array.isArray(entry.matchAny) && entry.matchAny.length > 0, `${entry.id}: matchAny`);
-    assert.ok(entry.matchAny.every((m) => typeof m === 'string' && m.trim().length >= 10), `${entry.id}: patterns must be specific`);
+    const patterns = entry.matchAny ?? [];
+    assert.ok(patterns.length > 0 || entry.matchRegex, `${entry.id}: needs matchAny or matchRegex`);
+    assert.ok(patterns.every((m) => typeof m === 'string' && m.trim().length >= 10), `${entry.id}: patterns must be specific`);
+    if (entry.matchRegex) assert.doesNotThrow(() => new RegExp(entry.matchRegex, 'i'), `${entry.id}: matchRegex`);
     assert.ok(entry.category, `${entry.id}: category`);
     assert.ok(entry.title, `${entry.id}: title`);
     assert.ok(entry.why, `${entry.id}: why`);
     assert.ok(Array.isArray(entry.nextSteps) && entry.nextSteps.length > 0, `${entry.id}: nextSteps`);
-    assert.ok(Array.isArray(entry.links) && entry.links.every((l) => l.url.startsWith('https://')), `${entry.id}: links`);
+    assert.ok((entry.links ?? []).every((l) => l.label && l.url.startsWith('https://')), `${entry.id}: links`);
+  }
+});
+
+test('each entry is reachable: its own patterns are not swallowed by an earlier entry', () => {
+  for (const entry of catalog.entries) {
+    for (const pattern of entry.matchAny ?? []) {
+      assert.equal(matchError(`Some prefix: ${pattern} (ref 123)`).id, entry.id, `"${pattern}" should lead to ${entry.id}`);
+    }
+  }
+});
+
+test('error texts quoted in the Error Reference lead to the right entry', () => {
+  const cases = {
+    'Account 98432 not found': 'account-not-found',
+    'Could not upload media to Twitter': 'media-rejected-by-platform',
+    'Could not upload media to storage': 'media-not-reachable',
+    'Could not upload video to Facebook: Please reduce the amount of data you’re asking for, then retry your request': 'facebook-reduce-data',
+    'Post failed to publish. Could not upload video': 'video-upload-failed',
+    'Unsupported media format (.mov)': 'media-unsupported-format',
+    'Cannot read properties of undefined (reading \'mediaUrl\')': 'media-result-missing',
+    'Cannot read properties of undefined (reading \'status\')': 'platform-no-response',
+    'You have reached the maximum number of 3 unique accounts for the last 24 hours. Please upgrade your plan to add more.': 'tiktok-unique-accounts-limit',
+    'Text length exceeds the character limit of 280 characters for platform twitter': 'text-too-long',
+    'Error posting to Facebook: (#200) requires pages_read_engagement and pages_manage_posts permission': 'facebook-missing-page-permissions',
+    "body.post.target must have required property 'isYourBrand' or 'isBrandedContent'": 'tiktok-brand-fields-missing',
+    'Failed to publish TikTok post after 3 retries (Unknown error reason)': 'tiktok-retries-exhausted',
+    'Slack did not confirm the post. It may have been posted.': 'slack-not-confirmed',
+    'This Slack channel is archived.': 'slack-channel-archived',
+    'Instagram rejected your post': 'instagram-rejected-post',
+    'Could not schedule post: No available slot time found in the next 9 months': 'no-free-slot',
+  };
+  for (const [message, expectedId] of Object.entries(cases)) {
+    assert.equal(matchError(message)?.id, expectedId, message);
   }
 });
 

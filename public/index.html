@@ -3,41 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'self'">
   <title>Blotato Post Doctor</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
-    li { margin: 6px 0; }
-    small { color: #666; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Blotato Post Doctor</h1>
-  <p>
-    Temporary page. The real interface is not built yet.
-    For now, each link below opens the raw diagnosis (JSON) for one built-in sample.
-  </p>
-  <ul id="samples"><li>Loading samples...</li></ul>
+  <main>
+    <header class="page-header">
+      <h1>Blotato Post Doctor</h1>
+      <p class="tagline">
+        Check a post submission and get a plain-language answer:
+        what happened, why, and what to do next.
+      </p>
+    </header>
 
-  <script>
-    fetch('/api/samples')
-      .then((response) => response.json())
-      .then(({ samples }) => {
-        const list = document.getElementById('samples');
-        list.textContent = '';
-        for (const sample of samples) {
-          const item = document.createElement('li');
-          const link = document.createElement('a');
-          link.href = '/api/diagnose?mode=sample&id=' + encodeURIComponent(sample.id);
-          link.textContent = sample.label;
-          const origin = document.createElement('small');
-          origin.textContent = ' (' + sample.origin + ')';
-          item.append(link, origin);
-          list.append(item);
-        }
-      })
-      .catch(() => {
-        document.getElementById('samples').textContent = 'Could not load samples. Is the server running?';
-      });
-  </script>
+    <form id="check-form" class="panel" novalidate>
+      <fieldset class="mode-switch">
+        <legend>Mode</legend>
+        <label><input type="radio" name="mode" value="sample" checked> Sample</label>
+        <label><input type="radio" name="mode" value="live"> Live</label>
+      </fieldset>
+
+      <div id="sample-fields" class="field">
+        <label for="sample-select">Sample response</label>
+        <select id="sample-select" name="sample"></select>
+        <p class="hint">Sample mode uses example responses, not your real posts. No API key needed.</p>
+      </div>
+
+      <div id="live-fields" class="field" hidden>
+        <label for="id-input">Post submission ID</label>
+        <input id="id-input" name="id" type="text" autocomplete="off" spellcheck="false"
+               placeholder="e.g. a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+        <p class="hint">
+          The <code>postSubmissionId</code> you got back when the post was created.
+          Live mode reads your API key from the <code>.env</code> file on this computer.
+        </p>
+      </div>
+
+      <button type="submit" id="check-button">Check post</button>
+    </form>
+
+    <p id="message" class="message" role="alert" hidden></p>
+
+    <section id="result" aria-live="polite" hidden></section>
+
+    <footer class="page-footer">
+      Unofficial project, not affiliated with Blotato.
+      Explanations are based on the public
+      <a href="https://help.blotato.com/support/errors" target="_blank" rel="noopener noreferrer">Blotato help docs</a>.
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>
