@@ -39,8 +39,8 @@ test('every sample produces a complete diagnosis', () => {
     const d = diagnose(getSample(id).response, { now: NOW });
     assert.ok(d.headline, `${id}: headline`);
     assert.ok(d.whatHappened, `${id}: whatHappened`);
-    assert.ok(d.nextSteps.length > 0, `${id}: nextSteps`);
-    assert.ok(d.supportReply.length > 50, `${id}: supportReply`);
+    assert.ok(d.agentSteps.length > 0, `${id}: nextSteps`);
+    assert.ok(d.customerReply.text.length > 50, `${id}: customerReply`);
   }
 });
 

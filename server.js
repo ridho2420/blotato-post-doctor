@@ -4,6 +4,7 @@
 //   GET /api/samples                     -> list of built-in sample responses
 //   GET /api/diagnose?mode=sample&id=... -> diagnosis for one sample
 //   GET /api/diagnose?mode=live&id=...   -> not built yet (planned)
+//   GET /api/drafts                      -> every customer reply draft, for review (see /drafts.html)
 //   anything else                        -> static files from the /public folder
 //
 // Start it with:  npm start   (then open http://localhost:3000)
@@ -14,6 +15,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
 import { diagnose } from './lib/diagnose.js';
+import { buildAllDrafts } from './lib/drafts.js';
 import { getSample, listSamples } from './lib/samples.js';
 
 const PUBLIC_DIR = fileURLToPath(new URL('./public/', import.meta.url));
@@ -107,6 +109,9 @@ async function handleRequest(req, res) {
   }
   if (url.pathname === '/api/samples') {
     return sendJson(res, 200, { samples: listSamples() });
+  }
+  if (url.pathname === '/api/drafts') {
+    return sendJson(res, 200, { drafts: buildAllDrafts() });
   }
   if (url.pathname === '/api/diagnose') {
     return handleDiagnose(url, res);

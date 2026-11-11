@@ -229,3 +229,40 @@ details pre {
   color: var(--muted);
   font-size: 0.85rem;
 }
+
+/* ---------- Reply reminders and the drafts review page ---------- */
+
+.reminders {
+  margin: 0 0 10px;
+  padding: 10px 12px 10px 30px;
+  border: 1px solid var(--warning);
+  border-radius: 6px;
+  font-size: 0.92rem;
+}
+.reminders li { margin: 3px 0; }
+
+.reply .caveat { margin: 0 0 10px; }
+
+.group-title { margin: 28px 0 10px; }
+.draft { margin-bottom: 14px; }
+.draft h2 { font-size: 1.05rem; margin-bottom: 2px; }
+.draft-tags { margin: 0 0 6px; display: flex; gap: 6px; flex-wrap: wrap; }
+.tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 1px 9px;
+}
+.draft-text {
+  margin: 0;
+  padding: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

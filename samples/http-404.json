@@ -1,0 +1,14 @@
+{
+  "id": "http-404",
+  "label": "HTTP 404: not found",
+  "origin": "docs-composed",
+  "note": "The OpenAPI reference documents a 404 for Get Post with a required 'message' and optional 'code', 'reqId', 'action', and 'details'. It gives field names only, no example values, so the values below are made up to fit that shape. The docs do not say when a 404 is returned instead of 'in-progress'.",
+  "sourceUrl": "https://help.blotato.com/rest-api-reference/openapi-reference/publishing",
+  "response": {
+    "httpStatus": 404,
+    "body": {
+      "message": "Resource not found",
+      "reqId": "req-example-0002"
+    }
+  }
+}

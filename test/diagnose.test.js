@@ -57,8 +57,8 @@ test('in-progress warns that the ID is not proven valid and that resubmitting ri
   assert.equal(d.outcome, 'in-progress');
   assert.equal(d.tone, 'waiting');
   assert.match(d.caveat, /does not prove the ID is valid/);
-  assert.ok(d.nextSteps.some((step) => /at least 10 seconds/.test(step)));
-  assert.ok(d.nextSteps.some((step) => /duplicate/.test(step)));
+  assert.ok(d.agentSteps.some((step) => /at least 10 seconds/.test(step)));
+  assert.ok(d.agentSteps.some((step) => /duplicate/.test(step)));
 });
 
 // ---------- Failed posts ----------
@@ -71,7 +71,7 @@ test('failed with a known error gives the catalog explanation and keeps the orig
   assert.equal(d.catalogEntryId, 'media-unsupported-type');
   assert.equal(d.originalError, 'Unsupported media type');
   assert.ok(d.why);
-  assert.ok(d.nextSteps.length > 0);
+  assert.ok(d.agentSteps.length > 0);
 });
 
 test('failed with an unknown error shows the original text and does not guess a cause', () => {
@@ -85,8 +85,8 @@ test('failed with an unknown error shows the original text and does not guess a 
   assert.equal(d.catalogEntryId, null);
   assert.match(d.caveat, /not in this tool's catalog/);
   assert.match(d.caveat, /will not guess/);
-  assert.match(d.supportReply, /demo-0001/);
-  assert.doesNotMatch(d.supportReply, /Why:/);
+  assert.match(d.customerReply.text, /demo-0001/);
+  assert.doesNotMatch(d.customerReply.text, /What it means:/);
 });
 
 test('failed without any errorMessage does not guess a cause', () => {
@@ -194,8 +194,8 @@ test('HTTP 429 keeps the API message and does not call the post failed', () => {
 test('HTTP 500 says a status check is safe to repeat but the post must not be resubmitted', () => {
   const d = diagnose({ httpStatus: 503, body: null });
   assert.match(d.headline, /503/);
-  assert.ok(d.nextSteps.some((step) => /repeating it is safe/.test(step)));
-  assert.ok(d.nextSteps.some((step) => /duplicate/.test(step)));
+  assert.ok(d.agentSteps.some((step) => /repeating it is safe/.test(step)));
+  assert.ok(d.agentSteps.some((step) => /duplicate/.test(step)));
 });
 
 test('an undocumented HTTP status is not explained with a guess', () => {
@@ -229,18 +229,18 @@ test('a body that is not an object is reported as unexpected', () => {
 
 test('support reply includes the ID, the original error, and numbered steps', () => {
   const d = diagnose(ok({ postSubmissionId: ID, status: 'failed', errorMessage: 'The user has not authorized application' }));
-  assert.match(d.supportReply, /^Hi there,/);
-  assert.match(d.supportReply, new RegExp(ID));
-  assert.match(d.supportReply, /"The user has not authorized application"/);
-  assert.match(d.supportReply, /\n1\. /);
-  assert.match(d.supportReply, /\[Your name\]$/);
+  assert.match(d.customerReply.text, /^Hi there,/);
+  assert.match(d.customerReply.text, new RegExp(ID));
+  assert.match(d.customerReply.text, /"The user has not authorized application"/);
+  assert.match(d.customerReply.text, /\n1\. /);
+  assert.match(d.customerReply.text, /\[Your name\]$/);
 });
 
 test('support reply for a scheduled post never says it was published', () => {
   const d = diagnose(ok({ postSubmissionId: ID, status: 'scheduled', scheduledTime: '2030-06-15T15:00:00Z' }), { now: NOW });
-  assert.match(d.supportReply, /scheduled for June 15, 2030/);
-  assert.match(d.supportReply, /has not been published yet/);
-  assert.doesNotMatch(d.supportReply, /recorded this post as published/);
+  assert.match(d.customerReply.text, /scheduled for June 15, 2030/);
+  assert.match(d.customerReply.text, /has not been published yet/);
+  assert.doesNotMatch(d.customerReply.text, /recorded this post as published/);
 });
 
 test('formatUtc pads hours and minutes', () => {

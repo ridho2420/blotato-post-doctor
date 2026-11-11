@@ -1,11 +1,13 @@
 {
-  "about": "Known Blotato post errors. Each entry is matched against the errorMessage of a failed post: a case-insensitive 'contains' match on any string in matchAny, or a regular expression in matchRegex. Entries are checked top to bottom and the first match wins, so keep specific entries above general ones. Explanations and steps are paraphrased from the official Blotato Error Reference; do not add causes the docs do not state. An entry without 'links' links to the Error Reference.",
+  "about": "Known Blotato post errors. Each entry is matched against the errorMessage of a failed post: a case-insensitive 'contains' match on any string in matchAny, or a regular expression in matchRegex. Entries are checked top to bottom and the first match wins, so keep specific entries above general ones. Explanations and steps are paraphrased from the official Blotato Error Reference; do not add causes the docs do not state. An entry without 'links' links to the Error Reference. 'nextSteps' are for the support agent (shown on the card). 'customerSteps' are for the customer (used in the reply draft) and may only contain fixes the Error Reference gives. 'handledBySupport: true' means the official fix can only be done by support, so the draft says support is handling it. 'example' is a sample of the error text, used by the tests and the drafts review page. 'why' is the explanation for the agent; 'customerWhy' is the explanation used in the reply draft, written for the customer and limited to what the Error Reference states. 'customerAsk' is one plain sentence asking the customer for details (a sentence, not a list: a draft has at most one numbered list).",
   "source": "https://help.blotato.com/support/errors",
   "scope": "Included: Error Reference rows that quote an actual error text and concern publishing a post (media, accounts, limits, platform rejections, scheduling). Left out on purpose: rows about visual/video generation, comments, messages, DM automations, source extraction, connecting accounts in the web app, and rows that describe a symptom or a label rather than an error text. The docs do not say which of these texts can appear in a failed post's errorMessage, so some entries may never match in practice.",
   "entries": [
     {
       "id": "media-container-not-recognized",
-      "matchAny": ["unsupported media format: mov,mp4,m4a,3gp,3g2,mj2"],
+      "matchAny": [
+        "unsupported media format: mov,mp4,m4a,3gp,3g2,mj2"
+      ],
       "category": "media",
       "title": "The video file's real format was not recognized",
       "why": "Blotato did not recognize the container format inside the file. A file name ending in .mp4 does not prove the file really is an MP4.",
@@ -16,13 +18,28 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "Unsupported media format: mov,mp4,m4a,3gp,3g2,mj2",
+      "customerSteps": [
+        "Export the video again as an MP4 file. Renaming the file to .mp4 is not enough, because the format inside the file stays the same.",
+        "Check the exported file against the requirements of the platform you are posting to.",
+        "Then create the post again with the new file."
+      ],
+      "customerWhy": "Blotato could not recognize the format inside the video file. A file name ending in .mp4 does not guarantee the file really is an MP4."
     },
     {
       "id": "media-unsupported-format",
-      "matchAny": ["unsupported media format"],
+      "matchAny": [
+        "unsupported media format"
+      ],
       "category": "media",
       "title": "The media format is not supported for this destination",
       "why": "Blotato reported the media format as unsupported. The docs describe this for MOV files: Blotato recognizes them, but handling differs by platform (LinkedIn converts non-MP4 video to MP4, Facebook accepts MP4 and MOV, other platforms may receive the file unchanged).",
@@ -32,13 +49,28 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "Unsupported media format (.mov)",
+      "customerSteps": [
+        "Export the video as MP4 with H.264 video and AAC audio, which is the most widely accepted format.",
+        "If the video is longer than 120 seconds, prepare it to match the platform before uploading, because it will not be converted automatically.",
+        "Then create the post again with the new file."
+      ],
+      "customerWhy": "The video's format is not supported for this post. MOV files in particular are handled differently by each platform: LinkedIn converts them to MP4, Facebook accepts MP4 and MOV, and other platforms may receive the file unchanged."
     },
     {
       "id": "media-unsupported-type",
-      "matchAny": ["unsupported media type"],
+      "matchAny": [
+        "unsupported media type"
+      ],
       "category": "media",
       "title": "The attached media type is not supported",
       "why": "The error says the media attached to this post is a type that is not supported. It does not say which file or which rule was broken.",
@@ -49,15 +81,66 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" },
-        { "label": "Blotato Logs", "url": "https://my.blotato.com/logs" }
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        }
       ],
-      "sourceNote": "This wording is the example errorMessage in the Get Post reference. The Error Reference has no row with this exact text; the steps follow its 'Invalid File Format' and 'Unsupported media format' rows."
+      "sourceNote": "This wording is the example errorMessage in the Get Post reference. The Error Reference has no row with this exact text; the steps follow its 'Invalid File Format' and 'Unsupported media format' rows.",
+      "example": "Unsupported media type",
+      "customerSteps": [
+        "Check that each media file's format is valid for the platform you are posting to.",
+        "Then create the post again with a supported file."
+      ],
+      "customerWhy": "A media file attached to this post is a type that is not supported.",
+      "customerAsk": "If you would like us to check it for you, reply with the file or files you attached and their type (for example MP4, MOV, JPG, or PNG), and the platform you were posting to."
+    },
+    {
+      "id": "account-invalid-credentials",
+      "matchAny": [
+        "invalid account credentials"
+      ],
+      "category": "account-connection",
+      "title": "The account credentials were reported as invalid",
+      "why": "The error says the account credentials are invalid. It does not say which account, or why they are invalid.",
+      "nextSteps": [
+        "Open the failed request in Blotato Logs to see which account the post was sent to and the full error.",
+        "Search the Blotato Error Reference for the more specific error text shown there, if any.",
+        "The docs give no fix for this exact wording, so do not suggest one to the customer as if it were confirmed. If the Logs do not settle it, escalate with the submission ID and the exact error."
+      ],
+      "links": [
+        {
+          "label": "REST workflow examples",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/workflows"
+        },
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        }
+      ],
+      "sourceNote": "This wording is the example errorMessage for a failed post on the 'REST workflow examples' page. The Error Reference has no row with this text and no fix for it, so the explanation only restates the message and the entry is marked as handled by support.",
+      "example": "Invalid account credentials",
+      "handledBySupport": true,
+      "customerWhy": "The credentials for the social account used for this post were reported as invalid.",
+      "customerAsk": "Could you tell me which social account you were posting to, and on which platform?"
     },
     {
       "id": "media-video-too-long-to-convert",
-      "matchAny": ["we can only automatically fix videos up to 120 seconds"],
+      "matchAny": [
+        "we can only automatically fix videos up to 120 seconds"
+      ],
       "category": "media",
       "title": "The video is too long for Blotato to convert automatically",
       "why": "The video needs changes (such as cropping, resizing, or re-encoding) to fit the destination platform, but Blotato only converts videos up to 120 seconds automatically. The error text names the requirement it could not fix.",
@@ -67,13 +150,28 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "This video is 185 seconds long, but we can only automatically fix videos up to 120 seconds",
+      "customerSteps": [
+        "Either shorten the video to 120 seconds or less, or export it so it already meets every requirement of the platform you are posting to.",
+        "Then create the post again with the new file."
+      ],
+      "customerWhy": "The video needs adjusting to fit the platform (for example cropping, resizing, or re-encoding), and Blotato only does that automatically for videos up to 120 seconds."
     },
     {
       "id": "media-not-reachable",
-      "matchAny": ["could not upload media to storage", "failed to upload stream to supabase"],
+      "matchAny": [
+        "could not upload media to storage",
+        "failed to upload stream to supabase"
+      ],
       "category": "media",
       "title": "Blotato could not fetch and store the media file",
       "why": "Blotato tried to fetch a URL in mediaUrls but could not save it as a media file. The docs say this is almost always because the file is not reachable, not because it is broken. Common causes they list: the URL is not public, it points to a preview page instead of the file itself, the file is larger than the plan allows, or the file is corrupted.",
@@ -85,13 +183,30 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "Could not upload media to storage",
+      "customerSteps": [
+        "Open the media link in an incognito/private browser window. It should download the file itself, not show a login or preview page.",
+        "If the file is on Google Drive or Dropbox, use a direct download link instead of a share or preview link.",
+        "Check the file is within your plan's upload size limit.",
+        "For a file on your own computer, upload it to Blotato first (presigned upload) and use the public URL you get back.",
+        "Then create the post again."
+      ],
+      "customerWhy": "Blotato could not download and save the media file from the link in the post. This is almost always because the link is not reachable, rather than the file being broken: for example the link is not public, it opens a preview page instead of the file, or the file is larger than your plan allows."
     },
     {
       "id": "media-metadata-unreadable",
-      "matchAny": ["failed to read media metadata"],
+      "matchAny": [
+        "failed to read media metadata"
+      ],
       "category": "media",
       "title": "Blotato could not read the media file's details",
       "why": "Blotato could not get usable metadata from the media URL. The docs note that a URL opening in your browser does not prove Blotato's servers can fetch it.",
@@ -102,13 +217,28 @@
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "Failed to read media metadata. Is the file accessible and a valid media file?",
+      "customerSteps": [
+        "Make sure the media link returns the file directly, without a login.",
+        "If the link starts with claude.ai/artifact/, export the image files from Claude and upload those files instead.",
+        "Then create the post again."
+      ],
+      "customerWhy": "Blotato could not read the details of the media file from its link. A link that opens in your own browser may still be unreachable for our servers."
     },
     {
       "id": "media-probe-invalid-data",
-      "matchAny": ["invalid data found when processing input"],
+      "matchAny": [
+        "invalid data found when processing input"
+      ],
       "category": "media",
       "title": "The media file could not be read as valid media",
       "why": "Blotato's metadata check could not read its input as valid media. The docs list an error page, an incomplete transfer, or invalid media as possibilities, and say this text alone does not confirm which one.",
@@ -118,13 +248,27 @@
         "Replace or re-encode the file only after you have identified the problem."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "ClientError: Command failed: ffprobe ... Invalid data found when processing input",
+      "customerSteps": [
+        "Check that the media link returns the media file itself, not an error page.",
+        "Inspect the source file, and replace or re-export it only once you have found what is wrong with it."
+      ],
+      "customerWhy": "Blotato could not read the file behind the media link as valid media. That can happen when the link returns an error page, the file transfer was incomplete, or the file itself is not valid media."
     },
     {
       "id": "media-conversion-failed",
-      "matchAny": ["media conversion failed"],
+      "matchAny": [
+        "media conversion failed"
+      ],
       "category": "media",
       "title": "Media conversion did not finish",
       "why": "The conversion did not finish. The docs say this message alone does not identify the cause, and that Blotato also returns it when the source download fails or comes back empty.",
@@ -134,14 +278,31 @@
         "Check the original submission's status before retrying."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" },
-        { "label": "Blotato Logs", "url": "https://my.blotato.com/logs" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        }
+      ],
+      "example": "Media conversion failed",
+      "customerSteps": [
+        "Check that the source media link opens the file.",
+        "Check the file against the requirements of the platform you are posting to."
+      ],
+      "customerWhy": "Blotato could not finish converting the media. This also happens when the file cannot be downloaded from its link, or the download comes back empty."
     },
     {
       "id": "media-fetch-failed",
-      "matchAny": ["failed to fetch media url"],
+      "matchAny": [
+        "failed to fetch media url"
+      ],
       "category": "media",
       "title": "Blotato could not fetch the media URL",
       "why": "Fetching the media URL did not return something Blotato could read. The docs say the unexpected character in this error does not establish the full response or the cause.",
@@ -151,13 +312,27 @@
         "Check the original submission's status before submitting again."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Media uploads and conversion", "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Media uploads and conversion",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/media-uploads-and-conversion"
+        }
+      ],
+      "example": "Failed to fetch media URL: char '<' is not expected.:1:1",
+      "customerSteps": [
+        "Check that the media link is accessible, has not expired, and returns actual media content.",
+        "If the file was uploaded first, make sure that upload finished."
+      ],
+      "customerWhy": "Blotato could not fetch usable media from the link in the post."
     },
     {
       "id": "media-url-empty",
-      "matchAny": ["url is empty"],
+      "matchAny": [
+        "url is empty"
+      ],
       "category": "media",
       "title": "A URL in the request was empty",
       "why": "The URL that was submitted is empty.",
@@ -165,39 +340,70 @@
         "Look at the step before this one in your workflow, and at the field that was mapped into the request.",
         "If the URL comes from a generated visual, confirm the visual finished and use the mediaUrl or imageUrls it returned.",
         "Do not just add a longer fixed wait; check the status and errors of the earlier step."
-      ]
+      ],
+      "example": "URL is empty",
+      "customerSteps": [
+        "Look at the step before this one in your workflow, and at the field that feeds the URL into the post.",
+        "If the URL comes from a generated visual, make sure the visual has finished and use the media URL it returned."
+      ],
+      "customerWhy": "The media URL sent with this post was empty."
     },
     {
       "id": "media-url-null",
-      "matchAny": ["mediaurl is null or empty"],
+      "matchAny": [
+        "mediaurl is null or empty"
+      ],
       "category": "media",
       "title": "The media URL was missing",
       "why": "The docs explain this as the video not being finished when the post was sent.",
       "nextSteps": [
         "Wait until the video has finished generating before publishing.",
         "Check that you have AI credits (Settings > Billing, or GET /v2/credits)."
-      ]
+      ],
+      "example": "mediaURL is null or empty",
+      "customerSteps": [
+        "Wait until the video has finished generating before publishing.",
+        "Check that you have AI credits left (Settings > Billing)."
+      ],
+      "customerWhy": "The media URL was missing, which means the video had not finished generating when the post was sent."
     },
     {
       "id": "media-result-missing",
-      "matchAny": ["cannot read properties of undefined (reading 'mediaurl')"],
+      "matchAny": [
+        "cannot read properties of undefined (reading 'mediaurl')"
+      ],
       "category": "media",
       "title": "A media-processing result was missing",
       "why": "The publishing queue did not receive one usable media-processing result for every media URL in the post.",
       "nextSteps": [
         "If the media came from a generated visual, confirm that job reached \"done\".",
         "Confirm every value in mediaUrls is a public file URL.",
-        "Retry the post once. If the same error returns, contact Blotato support with the request ID.",
+        "Retry the post once. If the same error returns, escalate to the technical team with the request ID.",
         "Reconnect a social account only if Blotato Logs show a separate authentication error."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Logs", "url": "https://my.blotato.com/logs" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        }
+      ],
+      "example": "Cannot read properties of undefined (reading 'mediaUrl')",
+      "customerSteps": [
+        "If the media came from a generated visual, confirm that it finished (\"done\").",
+        "Confirm every media URL in the post is a public file URL.",
+        "Then try the post once more."
+      ],
+      "customerWhy": "Blotato did not get a usable processing result for every media file in the post."
     },
     {
       "id": "platform-no-response",
-      "matchAny": ["cannot read properties of undefined (reading 'status')"],
+      "matchAny": [
+        "cannot read properties of undefined (reading 'status')"
+      ],
       "category": "temporary-platform-issue",
       "title": "The social platform did not return a response",
       "why": "The social platform did not return a response. The docs say this is usually a temporary issue.",
@@ -206,24 +412,46 @@
         "If the error persists, check that the media file is in a format the platform supports."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        }
+      ],
+      "example": "Cannot read properties of undefined (reading 'status')",
+      "customerSteps": [
+        "Wait a few minutes, then retry the post (in the web app: Posts > Failed).",
+        "If it keeps happening, check that your media file is in a format the platform supports."
+      ],
+      "customerWhy": "The social platform did not send back a response. This is usually temporary."
     },
     {
       "id": "media-invalid-file-format",
-      "matchAny": ["invalid file format"],
+      "matchAny": [
+        "invalid file format"
+      ],
       "category": "media",
       "title": "The file format is not valid for the platform",
       "why": "The file format does not meet the destination platform's requirements.",
       "nextSteps": [
         "Check the file format against the destination platform's media requirements.",
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
-      ]
+      ],
+      "example": "Invalid File Format",
+      "customerSteps": [
+        "Check that your file format is valid for the platform you are posting to.",
+        "Then create the post again with a supported file."
+      ],
+      "customerWhy": "The file format is not valid for the platform you posted to."
     },
     {
       "id": "media-invalid-video-dimensions",
-      "matchAny": ["invalid video dimensions"],
+      "matchAny": [
+        "invalid video dimensions"
+      ],
       "category": "media",
       "title": "The video's dimensions are not supported by the platform",
       "why": "The destination platform does not support the video's dimensions.",
@@ -231,60 +459,102 @@
         "Export the video in dimensions the platform accepts. For a portrait Instagram Reel, the docs name 1080 x 1920 or 720 x 1280 as compatible presets.",
         "Videos longer than 120 seconds are not resized automatically, so resize those before uploading.",
         "Then submit a corrected post."
-      ]
+      ],
+      "example": "Invalid Video Dimensions",
+      "customerSteps": [
+        "Export the video in dimensions the platform supports. For a portrait Instagram Reel, 1080 x 1920 or 720 x 1280 works.",
+        "A video longer than 120 seconds is not resized automatically, so resize it before uploading."
+      ],
+      "customerWhy": "The platform does not support the video's dimensions."
     },
     {
       "id": "media-aspect-ratio",
-      "matchAny": ["the aspect ratio is not supported"],
+      "matchAny": [
+        "the aspect ratio is not supported"
+      ],
       "category": "media",
       "title": "The video's aspect ratio is not supported by the platform",
       "why": "The destination platform does not support the video's aspect ratio.",
       "nextSteps": [
         "Check the platform's requirements and export the video in a supported aspect ratio.",
         "Then submit a corrected post."
-      ]
+      ],
+      "example": "The aspect ratio is not supported",
+      "customerSteps": [
+        "Check the platform's requirements and export the video in a supported aspect ratio."
+      ],
+      "customerWhy": "The platform does not support the video's aspect ratio."
     },
     {
       "id": "media-file-too-large-for-plan",
-      "matchAny": ["exceeds the maximum upload size"],
+      "matchAny": [
+        "exceeds the maximum upload size"
+      ],
       "category": "plan-limit",
       "title": "The media file is larger than your plan allows",
       "why": "The media file is larger than the upload size limit of your Blotato plan.",
       "nextSteps": [
         "Compress or trim the file so it is under the limit named in the error.",
         "Or upgrade your plan to raise the limit."
-      ]
+      ],
+      "example": "File exceeds the maximum upload size (100 MB) for your plan. Upload a smaller file, or upgrade your plan to increase your max upload size.",
+      "customerSteps": [
+        "Compress or trim the file so it is under the limit, or upgrade your plan to raise the limit."
+      ],
+      "customerWhy": "The media file is larger than the upload limit of your Blotato plan."
     },
     {
       "id": "facebook-reduce-data",
-      "matchAny": ["please reduce the amount of data you're asking for"],
+      "matchAny": [
+        "please reduce the amount of data you're asking for"
+      ],
       "category": "platform-rejection",
       "title": "Facebook asked to reduce the amount of data",
       "why": "The docs say this message does not establish an outage, memory exhaustion, or a follower-count threshold, so the cause is not known from the text alone. They also warn that the error does not prove nothing was published.",
       "nextSteps": [
         "Check the Facebook Page and the original submission before retrying.",
         "Keep the exact response and request ID.",
-        "If it is still unclear, contact Blotato support with that evidence."
+        "If it is still unclear, escalate to the technical team with that evidence."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Find a post's outcome before retrying", "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Find a post's outcome before retrying",
+          "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status"
+        }
+      ],
+      "example": "Could not upload video to Facebook: Please reduce the amount of data you're asking for, then retry your request",
+      "customerSteps": [
+        "Before trying again, check your Facebook Page to see whether the post went out."
+      ],
+      "customerWhy": "Facebook sent back this message, but the message alone does not tell us the reason. It is also possible that the post went out anyway."
     },
     {
       "id": "video-upload-failed",
-      "matchAny": ["could not upload video"],
+      "matchAny": [
+        "could not upload video"
+      ],
       "category": "media",
       "title": "The video could not be uploaded to the platform",
       "why": "Each platform has its own requirements for video uploads, and the docs point to those requirements for this error.",
       "nextSteps": [
         "Check the video against the destination platform's video requirements.",
         "Then submit a corrected post. An unchanged retry often fails for the same reason."
-      ]
+      ],
+      "example": "Post failed to publish. Could not upload video",
+      "customerSteps": [
+        "Check that your video follows the requirements of the platform you are posting to."
+      ],
+      "customerWhy": "The video could not be uploaded to the platform. Each platform has its own requirements for video uploads."
     },
     {
       "id": "media-rejected-by-platform",
-      "matchAny": ["could not upload media to"],
+      "matchAny": [
+        "could not upload media to"
+      ],
       "category": "media",
       "title": "The platform rejected the media",
       "why": "The platform rejected the media Blotato tried to upload. The docs say this is not a rate-limit or credits problem, and that retrying the same media without changes will not help. Common causes they list: the media does not meet the platform's format or size specs, or the account connection is stale.",
@@ -295,14 +565,32 @@
         "If several platforms show this at once, check each post's error separately; the cause can differ per platform."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Could not upload media to Twitter",
+      "customerSteps": [
+        "Open the failed post under Posts > Failed to read the exact error for it.",
+        "Check the media against the platform's format and size requirements.",
+        "If the media is fine, reconnect the account under Accounts, then retry."
+      ],
+      "customerWhy": "The platform did not accept the media in your post, so sending the same file again without changes will not help. This has nothing to do with how often you post or with your credits. Usually the file does not meet the platform's format or size requirements, or the account connection needs to be refreshed."
     },
     {
       "id": "api-key-authorization-failed",
-      "matchAny": ["authorization failed - please check your credentials"],
+      "matchAny": [
+        "authorization failed - please check your credentials"
+      ],
       "category": "api-key",
       "title": "The Blotato API key was not accepted",
       "why": "Blotato did not accept the API key used for the request.",
@@ -311,13 +599,27 @@
         "In n8n or Make, the official Blotato nodes avoid copying keys and IDs by hand."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Access and authentication", "url": "https://help.blotato.com/api-and-mcp-concepts/authentication" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Access and authentication",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/authentication"
+        }
+      ],
+      "example": "Authorization failed - please check your credentials",
+      "customerSteps": [
+        "Double-check the Blotato API key used in your workflow: copy it again in full, with no extra spaces.",
+        "If you use n8n or Make, the official Blotato nodes save you from copying keys and IDs by hand."
+      ],
+      "customerWhy": "The Blotato API key used for the request was not accepted."
     },
     {
       "id": "api-rate-limit",
-      "matchAny": ["the service is receiving too many requests from you"],
+      "matchAny": [
+        "the service is receiving too many requests from you"
+      ],
       "category": "posting-limit",
       "title": "Blotato's API rate limit was exceeded",
       "why": "Too many requests were sent to Blotato in a short time. The docs list 30 requests per minute each for Upload Media and Publish Post.",
@@ -326,9 +628,20 @@
         "Check whether the post was created before sending it again, to avoid a duplicate."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Rate limits", "url": "https://help.blotato.com/api-and-mcp-concepts/rate-limits" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Rate limits",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/rate-limits"
+        }
+      ],
+      "example": "The service is receiving too many requests from you",
+      "customerSteps": [
+        "Slow your workflow down: publishing posts and uploading media are each limited to 30 requests per minute."
+      ],
+      "customerWhy": "Too many requests were sent to Blotato in a short time."
     },
     {
       "id": "account-not-found",
@@ -342,13 +655,27 @@
         "Do not rely on IDs saved earlier in a dropdown or copied from an old lookup; they may no longer be current."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Accounts and identifiers", "url": "https://help.blotato.com/api-and-mcp-concepts/accounts-and-identifiers" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Accounts and identifiers",
+          "url": "https://help.blotato.com/api-and-mcp-concepts/accounts-and-identifiers"
+        }
+      ],
+      "example": "Account 98432 not found",
+      "customerSteps": [
+        "List your connected accounts again with the same API key or connection, and use an account ID from that list.",
+        "For a LinkedIn company page or Facebook Page, send the account ID as the account and the Page ID as the page; they are two different IDs."
+      ],
+      "customerWhy": "The account ID in the request was not found for your Blotato user and that platform. This happens when the ID belongs to a different API key, the account was disconnected, or the ID is from another platform. With LinkedIn company pages, a common mix-up is sending the Page ID where the account ID belongs."
     },
     {
       "id": "account-not-authorized-meta",
-      "matchAny": ["the user has not authorized application"],
+      "matchAny": [
+        "the user has not authorized application"
+      ],
       "category": "account-connection",
       "title": "The Instagram/Facebook connection is no longer authorized",
       "why": "The Meta access token for this account is no longer valid. The docs say tokens go stale when they expire, when they are revoked (for example after a password change or security refresh), or when the Blotato app was removed from Business Integrations.",
@@ -358,13 +685,28 @@
         "After reconnecting, submit the post again."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "The user has not authorized application",
+      "customerSteps": [
+        "In Blotato, go to Accounts and click Reconnect on this account.",
+        "In the Meta popup, approve access with both the Instagram account and its linked Facebook Page checked.",
+        "Then submit the post again."
+      ],
+      "customerWhy": "Blotato's access to this Instagram/Facebook account is no longer valid. That happens when the access expires, is revoked (for example after a password change or a security refresh), or the Blotato app was removed from Business Integrations."
     },
     {
       "id": "instagram-not-confirmed-user",
-      "matchAny": ["the user is not a confirmed user"],
+      "matchAny": [
+        "the user is not a confirmed user"
+      ],
       "category": "account-connection",
       "title": "Instagram says the account session is not confirmed",
       "why": "This error comes from Instagram/Meta: the Instagram account's session is not confirmed.",
@@ -374,13 +716,28 @@
         "Check the account is a Professional or Business account; the docs say personal accounts have problems with third-party publishing."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Could not publish on Instagram: Error validating access token: Sessions for the user are not allowed because the user is not a confirmed user",
+      "customerSteps": [
+        "Log into the Instagram account in a browser and complete any pending prompts (email or phone confirmation, security checks, updated terms).",
+        "In Blotato, disconnect the account and reconnect it using an incognito browser logged into only that Instagram account.",
+        "Check that it is a Professional or Business account."
+      ],
+      "customerWhy": "This error comes from Instagram/Meta: the session for the Instagram account is not confirmed."
     },
     {
       "id": "account-invalid-grant",
-      "matchAny": ["invalid_grant"],
+      "matchAny": [
+        "invalid_grant"
+      ],
       "category": "account-connection",
       "title": "An authorization has expired (invalid_grant)",
       "why": "The docs list invalid_grant in two places: an expired Instagram/Meta authorization token on a connected social account, and an expired Blotato MCP connection inside Claude. For a post sent through the REST API, the first one is the one that involves a social account.",
@@ -390,13 +747,27 @@
         "The docs note this error often causes follow-on \"mediaUrl\" errors; fix the authorization first."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "invalid_grant",
+      "customerSteps": [
+        "In Blotato, go to Accounts, find the Instagram account, and click Reconnect. Then retry.",
+        "If you use Blotato through Claude instead, remove and re-add the Blotato connector in Claude and approve access again."
+      ],
+      "customerWhy": "An authorization has expired. This is the Instagram/Meta connection of the social account or, if you use Blotato through Claude, the Blotato connection inside Claude."
     },
     {
       "id": "account-requires-reconnect",
-      "matchAny": ["account requires reconnect"],
+      "matchAny": [
+        "account requires reconnect"
+      ],
       "category": "account-connection",
       "title": "The social account needs to be reconnected",
       "why": "The account's authorization token expired, or the account needs some other manual reconnect or confirmation.",
@@ -405,13 +776,27 @@
         "After reconnecting, submit the post again."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Account requires reconnect",
+      "customerSteps": [
+        "In Blotato, go to Accounts and click Reconnect on this account.",
+        "Then retry the post."
+      ],
+      "customerWhy": "The authorization for this social account has expired, or the account needs to be reconnected or confirmed manually."
     },
     {
       "id": "facebook-missing-page-permissions",
-      "matchAny": ["pages_manage_posts"],
+      "matchAny": [
+        "pages_manage_posts"
+      ],
       "category": "account-connection",
       "title": "Facebook says the Page permissions are missing",
       "why": "Facebook requires the pages_read_engagement and pages_manage_posts permissions, held by someone with enough admin rights on the Page. The docs also note Blotato publishes to Pages, not to Groups or personal profiles.",
@@ -421,13 +806,27 @@
         "Do not remove the Blotato integration from Facebook as a routine step."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Error posting to Facebook: (#200) requires pages_read_engagement and pages_manage_posts permission",
+      "customerSteps": [
+        "Confirm the Facebook login you connected has publishing access to the Page.",
+        "Reconnect that Facebook login under Accounts, and select the Page and the requested permissions."
+      ],
+      "customerWhy": "Facebook requires permission to read and publish on the Page, from someone with enough admin rights on it. Blotato publishes to Pages, not to Groups or personal profiles."
     },
     {
       "id": "x-duplicate-content",
-      "matchAny": ["create a tweet with duplicate content"],
+      "matchAny": [
+        "create a tweet with duplicate content"
+      ],
       "category": "platform-rejection",
       "title": "X (Twitter) rejected the post as a duplicate",
       "why": "X rejects a post whose text is identical to a previous tweet on the same account.",
@@ -435,22 +834,37 @@
         "Check the X account first: the earlier, identical tweet may already be live.",
         "If you still want to post, change the caption text (even slightly) before posting again.",
         "If the same post was scheduled twice by accident, delete the duplicate in Posts > Scheduled."
-      ]
+      ],
+      "example": "You are not allowed to create a Tweet with duplicate content",
+      "customerSteps": [
+        "Change the caption text (even slightly) before posting again.",
+        "If the same post was scheduled twice by accident, delete the duplicate under Posts > Scheduled."
+      ],
+      "customerWhy": "X (Twitter) rejects a post whose text is identical to an earlier tweet on the same account."
     },
     {
       "id": "x-video-too-long",
-      "matchAny": ["not allowed to post a video longer than 2 minutes"],
+      "matchAny": [
+        "not allowed to post a video longer than 2 minutes"
+      ],
       "category": "platform-rejection",
       "title": "X (Twitter) rejected the video's length for this account",
       "why": "X rejected the video's duration for the connected account. The docs say Blotato passes X videos through without converting them, so Blotato's 120-second conversion limit is not the cause here, and that an X Premium subscription does not guarantee acceptance.",
       "nextSteps": [
         "Check the X account's API publishing restrictions and X's file requirements.",
         "Shorten the video if the account is not allowed longer videos, then submit a corrected post."
-      ]
+      ],
+      "example": "This user is not allowed to post a video longer than 2 minutes",
+      "customerSteps": [
+        "Check your X account's publishing restrictions and X's video file requirements."
+      ],
+      "customerWhy": "X (Twitter) rejected the video's length for this account. Blotato sends X videos as they are, without converting them, and an X Premium subscription does not guarantee that longer videos are accepted."
     },
     {
       "id": "x-not-permitted",
-      "matchAny": ["you are not permitted to perform this action"],
+      "matchAny": [
+        "you are not permitted to perform this action"
+      ],
       "category": "account-connection",
       "title": "X (Twitter) did not permit this action",
       "why": "The docs explain this X error as an expired authorization or changed permissions on the connected account.",
@@ -460,57 +874,171 @@
         "After reconnecting, submit the post again."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "You are not permitted to perform this action",
+      "customerSteps": [
+        "In Blotato, go to Accounts, find your X (Twitter) account, and click Reconnect.",
+        "Re-authorize the app when X asks, then retry the post."
+      ],
+      "customerWhy": "The authorization for your X (Twitter) account has expired, or its permissions changed."
     },
     {
       "id": "tiktok-unique-accounts-limit",
-      "matchAny": ["unique accounts for the last 24 hours"],
+      "matchAny": [
+        "unique accounts for the last 24 hours"
+      ],
       "category": "plan-limit",
       "title": "The Starter plan's TikTok account limit was reached",
       "why": "This is a posting limit on the Starter plan, not a limit on connected accounts: Blotato counts the distinct TikTok accounts that had successful posts in the last rolling 24 hours, and allows 3. Posting again to one of those accounts does not use another slot.",
       "nextSteps": [
         "Wait until one of the earlier accounts leaves the 24-hour window, or post to one of the accounts already used.",
         "Or upgrade the plan to remove this limit."
-      ]
+      ],
+      "example": "You have reached the maximum number of 3 unique accounts for the last 24 hours. Please upgrade your plan to add more.",
+      "customerSteps": [
+        "Wait until one of the 3 TikTok accounts you posted to leaves the 24-hour window, or post to one of those same accounts.",
+        "Or upgrade your plan to remove this limit."
+      ],
+      "customerWhy": "On the Starter plan you can post to 3 different TikTok accounts within any 24 hours. This is a posting limit, not a limit on connected accounts, and posting again to one of those 3 accounts is still allowed."
+    },
+    {
+      "id": "posting-limit-24h-youtube",
+      "matchRegex": "posts for the last 24 hours for this account.*\\byoutube\\b|\\byoutube\\b.*posts for the last 24 hours for this account",
+      "category": "posting-limit",
+      "title": "The YouTube channel reached its 24-hour posting limit",
+      "why": "Blotato enforces 10 posts per YouTube channel per rolling 24 hours on Starter, or 25 on Creator and Agency. YouTube's own restrictions are separate.",
+      "nextSteps": [
+        "Have the customer check the original outcome before retrying or uploading manually, to avoid a duplicate.",
+        "Then wait for earlier successful posts to leave the 24-hour window."
+      ],
+      "customerWhy": "On the Starter plan, Blotato allows 10 posts per YouTube channel in any 24 hours (25 on Creator and Agency), and this channel has reached that limit. YouTube's own limits apply separately.",
+      "customerSteps": [
+        "Before trying again or uploading the video manually, check whether the original post already went out on YouTube, so it does not appear twice.",
+        "Then wait until earlier posts drop out of the 24-hour window before posting to this channel again."
+      ],
+      "example": "You have reached the maximum number of 10 posts for the last 24 hours for this account (YouTube)",
+      "sourceNote": "The Error Reference lists this error with \"(YouTube)\" after it. It is not clear whether the platform name is part of the real error message; when it is not, the general entry posting-limit-24h is used instead."
+    },
+    {
+      "id": "posting-limit-24h-facebook",
+      "matchRegex": "posts for the last 24 hours for this account.*\\bfacebook\\b|\\bfacebook\\b.*posts for the last 24 hours for this account",
+      "category": "posting-limit",
+      "title": "The Facebook Page reached its 24-hour posting limit",
+      "why": "Facebook publishing is limited to 25 posts per 24 hours per Page. Each Page has its own independent limit. (The docs say \"per 24 hours\" here, not \"rolling\".)",
+      "nextSteps": [
+        "Wait 24 hours and try again, or publish to a different Page."
+      ],
+      "customerWhy": "Facebook publishing is limited to 25 posts per 24 hours for each Page, and this Page has reached that limit.",
+      "customerSteps": [
+        "Wait 24 hours, then try again.",
+        "Or publish to a different Page, since each Page has its own limit."
+      ],
+      "example": "You have reached the maximum number of 25 posts for the last 24 hours for this account (Facebook)",
+      "sourceNote": "The Error Reference lists this error with \"(Facebook)\" after it. It is not clear whether the platform name is part of the real error message; when it is not, the general entry posting-limit-24h is used instead."
+    },
+    {
+      "id": "posting-limit-24h-linkedin",
+      "matchRegex": "posts for the last 24 hours for this account.*\\blinkedin\\b|\\blinkedin\\b.*posts for the last 24 hours for this account",
+      "category": "posting-limit",
+      "title": "The LinkedIn profile or Page reached its 24-hour posting limit",
+      "why": "LinkedIn publishing is limited to 50 posts per 24 hours per profile and per company Page. Each has its own independent limit. (The docs say \"per 24 hours\" here, not \"rolling\".)",
+      "nextSteps": [
+        "Wait 24 hours and try again, or publish to a different profile or company Page."
+      ],
+      "customerWhy": "LinkedIn publishing is limited to 50 posts per 24 hours for each profile and each company Page, and this one has reached that limit.",
+      "customerSteps": [
+        "Wait 24 hours, then try again.",
+        "Or publish to a different profile or company Page, since each has its own limit."
+      ],
+      "example": "You have reached the maximum number of 50 posts for the last 24 hours for this account (LinkedIn)",
+      "sourceNote": "The Error Reference lists this error with \"(LinkedIn)\" after it. It is not clear whether the platform name is part of the real error message; when it is not, the general entry posting-limit-24h is used instead."
+    },
+    {
+      "id": "posting-limit-24h-slack",
+      "matchRegex": "posts for the last 24 hours for this account.*\\bslack\\b|\\bslack\\b.*posts for the last 24 hours for this account",
+      "category": "posting-limit",
+      "title": "The Slack channel reached its 24-hour posting limit",
+      "why": "Blotato limits each Slack channel to 100 posts per rolling 24 hours, on every plan, so upgrading does not raise it. Each channel has its own limit.",
+      "nextSteps": [
+        "Wait for earlier posts to leave the 24-hour window, or publish to another channel."
+      ],
+      "customerWhy": "Blotato allows 100 posts per Slack channel in any 24 hours, on every plan, and this channel has reached that limit. Upgrading the plan does not raise it.",
+      "customerSteps": [
+        "Wait until earlier posts drop out of the 24-hour window, then post again.",
+        "Or publish to another channel, since each channel has its own limit."
+      ],
+      "example": "You have reached the maximum number of 100 posts for the last 24 hours for this account (Slack)",
+      "sourceNote": "The Error Reference lists this error with \"(Slack)\" after it. It is not clear whether the platform name is part of the real error message; when it is not, the general entry posting-limit-24h is used instead."
     },
     {
       "id": "posting-limit-24h",
-      "matchAny": ["posts for the last 24 hours for this account"],
+      "matchAny": [
+        "posts for the last 24 hours for this account"
+      ],
       "category": "posting-limit",
-      "title": "The 24-hour posting limit for this destination was reached",
-      "why": "This destination hit its limit of posts in a rolling 24-hour window; the number in the error text is the limit that applied. Limits listed in the docs: YouTube 10 per channel on Starter (25 on Creator and Agency), Facebook 25 per Page, LinkedIn 50 per profile or company Page, Slack 100 per channel.",
+      "title": "A 24-hour posting limit was reached",
+      "why": "This destination reached a posting limit for a 24-hour period; the number in the error is the limit that applied. The status response does not say which platform it was, and the same number can belong to several platforms (Platform Posting Limits: TikTok 25 per account, with an older Starter message that still says 10; Instagram 50 per day; Pinterest 10, 20, or 50; Facebook 25 per Page; LinkedIn 50 per profile or Page; YouTube 10 on Starter or 25; Slack 100 per channel). YouTube, Slack, TikTok, and Pinterest count a rolling 24 hours; for Facebook and LinkedIn the docs say \"per 24 hours\".",
       "nextSteps": [
-        "Wait until earlier posts leave the 24-hour window, then post again.",
-        "Each Page, profile, or channel has its own limit, so posting to a different one is not blocked by this.",
-        "Before posting again, check whether the original post went out, to avoid a duplicate."
-      ]
+        "Find out which platform and destination the post was for (Blotato Posts or Logs), then use that platform's row in the Error Reference.",
+        "Ask the customer to check whether the original post already went out before posting again, to avoid a duplicate.",
+        "Do not give the customer a list of platform limits unless you know which platform this was."
+      ],
+      "example": "You have reached the maximum number of 25 posts for the last 24 hours for this account",
+      "customerSteps": [
+        "Before trying again, check whether the original post already went out, so it does not appear twice.",
+        "Then wait 24 hours before posting to this account again."
+      ],
+      "customerWhy": "This account has reached its posting limit for a 24-hour period. The number in the message above is the limit that applied.",
+      "sourceNote": "General entry for the 24-hour limit when the error does not name a platform this catalog has a row for (YouTube, Facebook, LinkedIn, Slack). It deliberately gives the customer no list of platform limits, because the platform is unknown and the same number can belong to several platforms (for example TikTok)."
     },
     {
       "id": "scheduled-posts-limit",
-      "matchAny": ["maximum number of scheduled posts"],
+      "matchAny": [
+        "maximum number of scheduled posts"
+      ],
       "category": "plan-limit",
       "title": "Your plan's limit of scheduled posts was reached",
       "why": "The number of queued scheduled posts reached your plan's limit.",
       "nextSteps": [
         "Delete some upcoming posts in Posts > Scheduled, or upgrade your plan.",
         "Then schedule the post again."
-      ]
+      ],
+      "example": "You have reached the maximum number of scheduled posts (100) for your plan. Please remove some scheduled posts or upgrade your plan.",
+      "customerSteps": [
+        "Delete some upcoming posts under Posts > Scheduled, or upgrade your plan."
+      ],
+      "customerWhy": "You have reached the number of scheduled posts your plan allows."
     },
     {
       "id": "scheduled-too-far",
-      "matchAny": ["scheduled time is too far in the future"],
+      "matchAny": [
+        "scheduled time is too far in the future"
+      ],
       "category": "scheduling",
       "title": "The scheduled time is too far in the future",
       "why": "The scheduled time is more than 9 months ahead.",
       "nextSteps": [
         "Pick a time within the next 9 months and schedule the post again."
-      ]
+      ],
+      "example": "Scheduled time is too far in the future.",
+      "customerSteps": [
+        "Pick a time within the next 9 months and schedule the post again."
+      ],
+      "customerWhy": "The scheduled time is more than 9 months in the future."
     },
     {
       "id": "no-free-slot",
-      "matchAny": ["no available slot time found"],
+      "matchAny": [
+        "no available slot time found"
+      ],
       "category": "scheduling",
       "title": "No free calendar slot was found",
       "why": "Blotato found no available matching slot in its search window. This applies when scheduling to the \"next free slot\".",
@@ -518,22 +1046,39 @@
         "Open the weekly schedule in Blotato and check that slots exist for this platform and account (or Page/channel) and still have free times.",
         "Add a slot if needed, or schedule the post for an exact time instead; exact-time scheduling does not need slots.",
         "Do not simply remove the scheduling fields: a request without them publishes immediately."
-      ]
+      ],
+      "example": "Could not schedule post: No available slot time found in the next 9 months",
+      "customerSteps": [
+        "Open your weekly schedule in Blotato and check that slots exist for this platform and account, with free times.",
+        "Add a slot if needed, or schedule the post for an exact time instead; that does not need slots.",
+        "Please do not just remove the scheduling settings: a post without them is published immediately."
+      ],
+      "customerWhy": "Blotato looked for the next free slot in your posting schedule and did not find one."
     },
     {
       "id": "youtube-upload-quota",
-      "matchAny": ["exceeded the number of videos they may upload"],
+      "matchAny": [
+        "exceeded the number of videos they may upload"
+      ],
       "category": "posting-limit",
       "title": "YouTube's upload limit was reached",
       "why": "YouTube reported that this account reached its upload limit.",
       "nextSteps": [
         "Wait 24 hours before uploading again.",
         "Check that the YouTube account is verified."
-      ]
+      ],
+      "example": "The user has exceeded the number of videos they may upload",
+      "customerSteps": [
+        "Wait 24 hours before uploading again.",
+        "Check that your YouTube account is verified."
+      ],
+      "customerWhy": "YouTube reported that this account has reached its upload limit."
     },
     {
       "id": "platform-rate-limit",
-      "matchAny": ["exceeded rate limits"],
+      "matchAny": [
+        "exceeded rate limits"
+      ],
       "category": "posting-limit",
       "title": "The platform is rate-limiting this account",
       "why": "The platform is limiting publishing for the connected account. The docs describe this for repeated YouTube or LinkedIn failures.",
@@ -542,61 +1087,112 @@
         "If posts keep failing with this error after waiting, reconnect the social account in Accounts and retry; the docs say a stale connection token can keep triggering the limiter."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        }
+      ],
+      "example": "Exceeded rate limits",
+      "customerSteps": [
+        "Wait an hour, then retry the post from Posts > Failed.",
+        "If it keeps failing with this error after waiting, reconnect the social account under Accounts, then retry."
+      ],
+      "customerWhy": "The platform is limiting how often this account can publish."
     },
     {
       "id": "text-too-long",
-      "matchAny": ["exceeds the character limit", "tweet is longer than"],
+      "matchAny": [
+        "exceeds the character limit",
+        "tweet is longer than"
+      ],
       "category": "content",
       "title": "The post text is too long for the platform",
       "why": "The text is longer than the destination platform (or the connected X account) allows. The docs note that emoji and full-width characters count as 2.",
       "nextSteps": [
         "Shorten the text, and any additional posts in the thread that the error names.",
         "Then submit the corrected post."
-      ]
+      ],
+      "example": "Text length exceeds the character limit of 280 characters for platform twitter",
+      "customerSteps": [
+        "Shorten the text (and any additional posts in the thread that the error names). Emoji and full-width characters count as 2.",
+        "Then submit the post again."
+      ],
+      "customerWhy": "The text is longer than the platform allows."
     },
     {
       "id": "instagram-hashtag-limit",
-      "matchAny": ["maximum of 5 hashtags"],
+      "matchAny": [
+        "maximum of 5 hashtags"
+      ],
       "category": "content",
       "title": "The post has more than 5 hashtags",
       "why": "This is a Blotato guardrail, not an Instagram rule. Blotato caps posts at 5 hashtags on purpose.",
       "nextSteps": [
         "Trim the caption to 5 hashtags or fewer.",
         "Then publish the corrected post."
-      ]
+      ],
+      "example": "Instagram allows a maximum of 5 hashtags per post",
+      "customerSteps": [
+        "Trim the caption to 5 hashtags or fewer, then publish again."
+      ],
+      "customerWhy": "Instagram itself allows more hashtags, but Blotato limits posts to 5 on purpose, because more than 5 hashtags reduces reach on Instagram, TikTok, and Facebook."
     },
     {
       "id": "instagram-carousel-count",
-      "matchAny": ["qualify as a carousel"],
+      "matchAny": [
+        "qualify as a carousel"
+      ],
       "category": "content",
       "title": "The number of attachments does not fit an Instagram carousel",
       "why": "Instagram says the post has too few or too many attachments to be a carousel. Through the API, Instagram supports at most 10 images or videos per carousel.",
       "nextSteps": [
         "Change the number of media files so it fits a carousel (no more than 10).",
         "Then submit the corrected post."
-      ]
+      ],
+      "example": "Could not publish on Instagram: Unsupported post type. The post has too little or too many attachments to qualify as a carousel",
+      "customerSteps": [
+        "Use no more than 10 images or videos in the carousel, then submit the post again."
+      ],
+      "customerWhy": "Instagram did not accept the number of images or videos as a carousel. Through Blotato, a carousel can have at most 10."
     },
     {
       "id": "instagram-temporary-error",
-      "matchAny": ["instagram encountered a temporary error"],
+      "matchAny": [
+        "instagram encountered a temporary error"
+      ],
       "category": "temporary-platform-issue",
       "title": "Instagram returned a temporary error",
       "why": "Instagram returned a temporary error while Blotato was publishing. Blotato already retried on its own before reporting this.",
       "nextSteps": [
         "Wait a few minutes, then retry the post from Posts > Failed.",
-        "The error message ends with a reference ID. Include it if you contact support because the post keeps failing."
+        "The error message ends with a reference ID. Include it if you escalate to the technical team because the post keeps failing."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        }
+      ],
+      "example": "Instagram encountered a temporary error while publishing your post. Please try again in a few minutes.",
+      "customerSteps": [
+        "Wait a few minutes, then retry the post from Posts > Failed.",
+        "If it keeps failing, reply with the reference ID at the end of the error message."
+      ],
+      "customerWhy": "Instagram returned a temporary error while the post was being published. Blotato already retried automatically before reporting it."
     },
     {
       "id": "instagram-media-processing-timeout",
-      "matchAny": ["instagram server media processing timed out"],
+      "matchAny": [
+        "instagram server media processing timed out"
+      ],
       "category": "temporary-platform-issue",
       "title": "Instagram took too long to process the media",
       "why": "Blotato used up its waiting and retry attempts while Instagram still reported the media as not ready. The docs warn that a timeout alone is not proof that nothing was posted.",
@@ -606,13 +1202,28 @@
         "If nothing was posted, retry after a delay."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Find a post's outcome before retrying", "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Find a post's outcome before retrying",
+          "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status"
+        }
+      ],
+      "example": "Instagram server media processing timed out. Please try submitting the post again in a few minutes.",
+      "customerSteps": [
+        "Check your Instagram account first, in case the post did appear.",
+        "If it is not there, try the post again after a few minutes.",
+        "If it keeps failing, reply with the reference ID from the error message."
+      ],
+      "customerWhy": "Instagram was still processing the media when Blotato ran out of retries. It is possible that the post went out anyway."
     },
     {
       "id": "instagram-internal-server-error",
-      "matchAny": ["error posting to instagram: an internal server error occurred"],
+      "matchAny": [
+        "error posting to instagram: an internal server error occurred"
+      ],
       "category": "temporary-platform-issue",
       "title": "Instagram had a temporary outage",
       "why": "The docs describe this as a brief outage of Instagram's API, not a Blotato issue. Blotato retries the post 2 times on its own; if it still failed, the outage lasted longer than a few minutes.",
@@ -620,13 +1231,26 @@
         "Wait a few hours, then retry from Posts > Failed."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        }
+      ],
+      "example": "Error posting to Instagram: An internal server error occurred",
+      "customerSteps": [
+        "Wait a few hours, then retry the post from Posts > Failed."
+      ],
+      "customerWhy": "Instagram's API had a brief outage. Blotato retried the post 2 times automatically, so the outage lasted longer than a few minutes."
     },
     {
       "id": "instagram-no-error",
-      "matchAny": ["error posting to instagram: no error"],
+      "matchAny": [
+        "error posting to instagram: no error"
+      ],
       "category": "platform-rejection",
       "title": "Instagram rejected the post without giving a reason",
       "why": "The docs describe this as a glitch on Instagram's side, where its API returns \"No error\" and rejects the video.",
@@ -634,11 +1258,20 @@
         "Reduce the number of hashtags.",
         "Shorten the caption.",
         "Leave more time between posts."
-      ]
+      ],
+      "example": "Error posting to Instagram: No error",
+      "customerSteps": [
+        "Reduce the number of hashtags.",
+        "Shorten the caption.",
+        "Leave more time between posts."
+      ],
+      "customerWhy": "Instagram rejected the post without giving a reason. This looks like a glitch on Instagram's side."
     },
     {
       "id": "instagram-unexpected-error",
-      "matchAny": ["could not publish on instagram: an unexpected error has occurred"],
+      "matchAny": [
+        "could not publish on instagram: an unexpected error has occurred"
+      ],
       "category": "platform-rejection",
       "title": "Instagram reported an unexpected error",
       "why": "This error comes from Instagram/Meta, not from Blotato. The message does not say what went wrong.",
@@ -647,17 +1280,36 @@
         "Reconnect the Instagram account in Accounts.",
         "Check the media URL is publicly accessible (open it in an incognito window).",
         "Reduce hashtags and caption length, and leave more time between posts.",
-        "If it persists after reconnecting, contact Blotato support with the reqId from the error message."
+        "If it persists after reconnecting, escalate to the technical team with the reqId from the error message."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Logs", "url": "https://my.blotato.com/logs" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Could not publish on Instagram: An unexpected error has occurred",
+      "customerSteps": [
+        "Reconnect your Instagram account under Accounts.",
+        "Check that the media URL is publicly accessible (open it in an incognito window).",
+        "Reduce hashtags and caption length, and leave more time between posts.",
+        "If it still fails after reconnecting, reply with the reqId from the error message."
+      ],
+      "customerWhy": "This error comes from Instagram/Meta, not from Blotato."
     },
     {
       "id": "instagram-restricted-activity",
-      "matchAny": ["we restrict certain activity to protect our community"],
+      "matchAny": [
+        "we restrict certain activity to protect our community"
+      ],
       "category": "platform-rejection",
       "title": "Instagram blocked the post under its activity restrictions",
       "why": "Instagram made this decision based on its own risk and spam scoring.",
@@ -666,56 +1318,98 @@
         "Shorten the caption.",
         "Leave more time between posts.",
         "If none of that works, post manually for a while so the account builds normal activity."
-      ]
+      ],
+      "example": "Error posting to Instagram: We restrict certain activity to protect our community.",
+      "customerSteps": [
+        "Reduce the number of hashtags.",
+        "Shorten the caption.",
+        "Leave more time between posts.",
+        "If none of that works, post manually for a while so the account builds up normal activity."
+      ],
+      "customerWhy": "Instagram blocked the post based on its own risk and spam checks."
     },
     {
       "id": "instagram-rejected-post",
-      "matchAny": ["instagram rejected your post"],
+      "matchAny": [
+        "instagram rejected your post"
+      ],
       "category": "platform-rejection",
       "title": "Instagram rejected the post",
       "why": "The docs say the account is running into Instagram's spam and bot-risk checks.",
       "nextSteps": [
         "For the next week, log into the Instagram account daily and browse the feed for about 10 minutes like a normal user.",
         "Space posts out instead of retrying quickly in a loop."
-      ]
+      ],
+      "example": "Instagram rejected your post",
+      "customerSteps": [
+        "For the next week, log into the Instagram account daily and scroll the feed for about 10 minutes like a normal user.",
+        "Space your posts out instead of retrying quickly."
+      ],
+      "customerWhy": "The account is running into Instagram's spam and bot-risk checks."
     },
     {
       "id": "threads-feature-not-available",
-      "matchAny": ["threads api feature not available"],
+      "matchAny": [
+        "threads api feature not available"
+      ],
       "category": "account-connection",
       "title": "Threads says this account cannot use the feature",
       "why": "Threads reported that this user does not have access to the Threads API feature.",
       "nextSteps": [
         "Link the Instagram account to Threads.",
         "Use the Threads account normally for a few days (post manually) before connecting it to Blotato."
-      ]
+      ],
+      "example": "Threads API Feature Not Available: This user does not have access to this Threads API feature",
+      "customerSteps": [
+        "Link your Instagram account to Threads.",
+        "Post on the Threads account manually for a few days before connecting it to Blotato."
+      ],
+      "customerWhy": "Threads reported that this account does not have access to the feature needed for posting."
     },
     {
       "id": "tiktok-active-user-cap",
-      "matchAny": ["reached_active_user_cap"],
+      "matchAny": [
+        "reached_active_user_cap"
+      ],
       "category": "posting-limit",
       "title": "TikTok reported its daily active-user quota",
       "why": "TikTok reported that its daily active-user quota was reached. The docs say this error does not establish an account warm-up or content-quality problem.",
       "nextSteps": [
         "Keep the error text and request ID.",
-        "Contact Blotato support, or follow retry guidance they have confirmed.",
+        "Escalate to the technical team, or follow retry guidance they have confirmed.",
         "Do not repeatedly reconnect the account."
-      ]
+      ],
+      "example": "reached_active_user_cap",
+      "handledBySupport": true,
+      "customerSteps": [
+        "Please do not reconnect the TikTok account repeatedly; that does not help with this error."
+      ],
+      "customerWhy": "TikTok reported that its daily limit on active users was reached. This error alone does not mean your account needs more warming up, or that there is a problem with your content."
     },
     {
       "id": "tiktok-url-ownership",
-      "matchAny": ["url ownership verification"],
+      "matchAny": [
+        "url ownership verification"
+      ],
       "category": "media",
       "title": "TikTok rejected the media URL",
       "why": "TikTok rejects media from certain URLs under its URL ownership verification rules.",
       "nextSteps": [
         "Host the media somewhere else, or upload it to Blotato first with the Upload Media endpoint and use the URL it returns.",
         "Then submit the post again."
-      ]
+      ],
+      "example": "Please review our URL ownership verification rules",
+      "customerSteps": [
+        "Host the media somewhere else, or upload it to Blotato first and use the URL you get back.",
+        "Then submit the post again."
+      ],
+      "customerWhy": "TikTok does not accept media from certain URLs."
     },
     {
       "id": "tiktok-token-refresh-failed",
-      "matchAny": ["could not refresh tiktok access_token"],
+      "matchAny": [
+        "could not refresh tiktok access_token"
+      ],
       "category": "temporary-platform-issue",
       "title": "TikTok temporarily refused to refresh the connection",
       "why": "TikTok's servers temporarily rejected the token refresh.",
@@ -724,13 +1418,27 @@
         "If the error persists, reconnect the TikTok account in Accounts."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Could not refresh TikTok access_token: Service Unavailable",
+      "customerSteps": [
+        "Wait 15 to 30 minutes, then retry.",
+        "If the error persists, reconnect your TikTok account under Accounts."
+      ],
+      "customerWhy": "TikTok's servers temporarily refused to refresh the connection to your account."
     },
     {
       "id": "tiktok-html-instead-of-json",
-      "matchAny": ["json value expected but got '<'"],
+      "matchAny": [
+        "json value expected but got '<'"
+      ],
       "category": "temporary-platform-issue",
       "title": "TikTok returned an error page instead of a normal answer",
       "why": "TikTok's API returned an HTML error page instead of JSON. The docs describe this as a temporary TikTok server issue (outage, rate limiting, or maintenance) and say the post payload is valid.",
@@ -739,24 +1447,46 @@
         "If it keeps failing, reconnect the TikTok account in Accounts."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "JSON value expected but got '<' at position 0",
+      "customerSteps": [
+        "Your post itself is fine. Retry after a few minutes.",
+        "If it keeps failing, reconnect your TikTok account under Accounts."
+      ],
+      "customerWhy": "TikTok's servers returned an error page instead of a normal response. This is a temporary issue on TikTok's side."
     },
     {
       "id": "tiktok-retries-exhausted",
-      "matchAny": ["failed to publish tiktok post after"],
+      "matchAny": [
+        "failed to publish tiktok post after"
+      ],
       "category": "platform-rejection",
       "title": "TikTok publishing failed after Blotato's retries",
       "why": "Blotato used up its retry attempts. The docs say \"Unknown error reason\" is a fallback for a failure reason Blotato has no mapping for, and is not proof of an outage or a credit problem.",
       "nextSteps": [
         "Check the TikTok account before submitting again, in case the post went out.",
-        "Then send Blotato support the full error and reference IDs."
-      ]
+        "Then escalate to the technical team with the full error and reference IDs."
+      ],
+      "example": "Failed to publish TikTok post after 3 retries (Unknown error reason)",
+      "handledBySupport": true,
+      "customerSteps": [
+        "Please also check your TikTok account, in case the post did go out."
+      ],
+      "customerWhy": "Blotato tried to publish the post several times, and TikTok did not accept it. TikTok gave a reason that Blotato cannot describe yet. That does not mean there was an outage or a problem with your credits."
     },
     {
       "id": "tiktok-update-app",
-      "matchAny": ["update their tiktok to the latest version"],
+      "matchAny": [
+        "update their tiktok to the latest version"
+      ],
       "category": "platform-rejection",
       "title": "TikTok asked for the app to be updated (photo posts)",
       "why": "This error comes from TikTok on image and carousel posts. The docs say it appears even when the TikTok app is already up to date.",
@@ -764,16 +1494,31 @@
         "On the phone connected to that TikTok account: update the app, open it and log in, force close, reopen, then clear the cache under Settings and privacy > Free up space.",
         "Retry from Posts > Failed.",
         "If it persists, choose Reconnect for the TikTok account in Accounts.",
-        "If it still returns, contact Blotato support through the in-app chat."
+        "If it still returns, escalate to the technical team so the TikTok account can be removed and then connected fresh."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Failed posts", "url": "https://my.blotato.com/posts?status=failed" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Failed posts",
+          "url": "https://my.blotato.com/posts?status=failed"
+        }
+      ],
+      "example": "Error uploading images to TikTok: Please notice the user to update their TikTok to the latest version to enable this functionality",
+      "customerSteps": [
+        "On the phone connected to that TikTok account: update the TikTok app, open it and log in, force close it, reopen it, then go to Profile > Settings and privacy > Free up space and clear the cache.",
+        "Retry the post from Posts > Failed.",
+        "If it persists, choose Reconnect for the TikTok account under Accounts."
+      ],
+      "customerWhy": "This error comes from TikTok on image and carousel posts. It can appear even when the TikTok app is already up to date."
     },
     {
       "id": "tiktok-picture-size",
-      "matchAny": ["unsupported picture size"],
+      "matchAny": [
+        "unsupported picture size"
+      ],
       "category": "media",
       "title": "TikTok does not support the picture's size",
       "why": "TikTok rejected the image's size. The docs note that Blotato tries to normalize images, but a successful upload does not prove TikTok accepted the image.",
@@ -781,11 +1526,19 @@
         "Check the image's format, dimensions, and file size.",
         "Use a JPEG export, for example 1080 x 1920 for portrait images, at no more than 20 MB.",
         "Then submit a corrected post."
-      ]
+      ],
+      "example": "Unsupported picture size",
+      "customerSteps": [
+        "Export the image as a JPEG, for example 1080 x 1920 for a portrait image, at no more than 20 MB.",
+        "Then submit the post again."
+      ],
+      "customerWhy": "TikTok did not accept the size of the image."
     },
     {
       "id": "tiktok-brand-fields-missing",
-      "matchAny": ["isyourbrand"],
+      "matchAny": [
+        "isyourbrand"
+      ],
       "category": "request",
       "title": "TikTok brand fields are missing from the request",
       "why": "Every TikTok post sent through the REST API (including the n8n and Make nodes) must include both isYourBrand and isBrandedContent. There is no default.",
@@ -793,49 +1546,86 @@
         "Add both fields inside the target object (not content), even when both are false.",
         "Set isYourBrand to true when the post promotes your own brand, and isBrandedContent to true for a paid partnership.",
         "Then submit the corrected post."
-      ]
+      ],
+      "example": "body.post.target must have required property 'isYourBrand' or 'isBrandedContent'",
+      "customerSteps": [
+        "Add both isYourBrand and isBrandedContent inside the target object of the request, even when both are false.",
+        "Set isYourBrand to true when the post promotes your own brand, and isBrandedContent to true for a paid partnership."
+      ],
+      "customerWhy": "Every TikTok post sent through the API must state whether it promotes your own brand and whether it is branded content. Both settings are required, and there is no default."
     },
     {
       "id": "tiktok-retryable-server-issue",
-      "matchAny": ["tiktok's servers may be experiencing issues"],
+      "matchAny": [
+        "tiktok's servers may be experiencing issues"
+      ],
       "category": "temporary-platform-issue",
       "title": "TikTok reported a temporary server issue",
       "why": "The docs explain this as a TikTok server issue, or posting too frequently.",
       "nextSteps": [
         "Wait a while, then retry.",
         "Before retrying, check the TikTok account to make sure the post did not go out."
-      ]
+      ],
+      "example": "TikTok's servers may be experiencing issues. This is a retryable error",
+      "customerSteps": [
+        "Wait a while, then retry the post."
+      ],
+      "customerWhy": "TikTok had a server issue, or the account is posting too frequently."
     },
     {
       "id": "pinterest-site-blocks-pins",
-      "matchAny": ["this site doesn't allow you to save pins"],
+      "matchAny": [
+        "this site doesn't allow you to save pins"
+      ],
       "category": "platform-rejection",
       "title": "Pinterest refused the link",
       "why": "This error is from Pinterest. The docs give two common causes: the website has indicated it does not want to be pinned, or Pinterest's blocklist flagged the URL (often a false positive).",
       "nextSteps": [
         "As a workaround, the docs suggest adding parameters to the link (for example ?ref=pin&v=111) so Pinterest treats it as a new URL.",
         "Then submit the pin again."
-      ]
+      ],
+      "example": "Sorry! This site doesn't allow you to save Pins.",
+      "customerSteps": [
+        "As a workaround, add parameters to your link (for example ?ref=pin&v=111) so Pinterest sees it as a new URL that gets past the filter, then submit the pin again."
+      ],
+      "customerWhy": "This error comes from Pinterest. The two common causes are that the website has asked not to be pinned, or that Pinterest's blocklist flagged the link (often by mistake)."
     },
     {
       "id": "pinterest-verified-accounts-only",
-      "matchAny": ["pinterest api access is temporarily restricted to verified accounts"],
+      "matchAny": [
+        "pinterest api access is temporarily restricted to verified accounts"
+      ],
       "category": "account-connection",
       "title": "Pinterest restricts API access for this account",
-      "why": "The docs say the Pinterest account still looks new to Pinterest and needs about 2 weeks of manual use before connecting posting tools.",
+      "why": "Pinterest restricts API access to verified accounts. An account is verified automatically when it is reconnected after reaching 100+ monthly views. The Error Reference says a new account MUST be warmed up for 2 weeks first; other help pages say 1-2 weeks (Pinterest troubleshooting) or 2-3 weeks (Social accounts).",
       "nextSteps": [
-        "Post manually: 1 pin per day at first, then slowly more.",
-        "Once the account has 100+ monthly views, go to Accounts, click Reconnect on the Pinterest account, and retry.",
-        "If the account already has 100+ monthly views, skip the warm-up and reconnect now."
+        "Ask the customer to warm the account up for 2 weeks (per the Error Reference): 1 pin per day manually, then 2, then 3, and so on.",
+        "Once the account has 100+ monthly views, they reconnect it under Accounts and retry; verification is automatic.",
+        "If the account already has 100+ monthly views, skip the warm-up and have them reconnect now."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Accounts", "url": "https://my.blotato.com/accounts" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Accounts",
+          "url": "https://my.blotato.com/accounts"
+        }
+      ],
+      "example": "Pinterest API access is temporarily restricted to verified accounts only",
+      "customerSteps": [
+        "Warm the account up for 2 weeks before connecting it to Blotato again: post manually, starting with 1 pin per day, then 2, then 3, and so on. Skipping the warm-up often gets the account shadowbanned or flagged by Pinterest.",
+        "Once the account has 100+ monthly views, go to Accounts, click Reconnect on the Pinterest account, and retry.",
+        "If your account already has 100+ monthly views, you can skip the warm-up and reconnect now."
+      ],
+      "customerWhy": "Pinterest is limiting access for posting tools like Blotato to verified accounts, and this account still looks new. An account becomes verified automatically when you reconnect it after it reaches 100+ monthly views."
     },
     {
       "id": "pinterest-pin-not-created",
-      "matchAny": ["could not create pinterest pin"],
+      "matchAny": [
+        "could not create pinterest pin"
+      ],
       "category": "platform-rejection",
       "title": "Pinterest rejected the pin without a readable reason",
       "why": "This is the general message Blotato shows when Pinterest rejects a pin without giving a readable reason.",
@@ -845,13 +1635,24 @@
         "If all your Pinterest accounts fail at once while manual pinning works, the docs say that points to a temporary issue on Pinterest's side; retry later."
       ],
       "links": [
-        { "label": "Error Reference", "url": "https://help.blotato.com/support/errors" },
-        { "label": "Blotato Logs", "url": "https://my.blotato.com/logs" }
-      ]
+        {
+          "label": "Error Reference",
+          "url": "https://help.blotato.com/support/errors"
+        },
+        {
+          "label": "Blotato Logs",
+          "url": "https://my.blotato.com/logs"
+        }
+      ],
+      "example": "Could not create Pinterest pin",
+      "handledBySupport": true,
+      "customerWhy": "Pinterest rejected the pin without giving a readable reason."
     },
     {
       "id": "slack-not-confirmed",
-      "matchAny": ["slack did not confirm the post"],
+      "matchAny": [
+        "slack did not confirm the post"
+      ],
       "category": "temporary-platform-issue",
       "title": "Slack did not confirm the post",
       "why": "Slack did not confirm the result, so the message might already be in the channel.",
@@ -859,81 +1660,157 @@
         "Check the Slack channel before publishing again, so the post does not appear twice."
       ],
       "links": [
-        { "label": "Find a post's outcome before retrying", "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status" }
-      ]
+        {
+          "label": "Find a post's outcome before retrying",
+          "url": "https://help.blotato.com/start-with-an-ai-agent/publishing-status"
+        }
+      ],
+      "example": "Slack did not confirm the post. It may have been posted.",
+      "customerSteps": [
+        "Check the Slack channel before publishing again, so the post does not appear twice."
+      ],
+      "customerWhy": "Slack did not confirm the result, so the message may already be in the channel."
     },
     {
       "id": "slack-channel-not-found",
-      "matchAny": ["could not find this slack channel"],
+      "matchAny": [
+        "could not find this slack channel"
+      ],
       "category": "destination",
       "title": "Blotato could not find the Slack channel",
       "why": "The channel does not exist, or it is a private channel that the Blotato app has not been invited to.",
       "nextSteps": [
         "For a private channel, run /invite @Blotato in the channel, then publish again.",
         "Otherwise, review the workspace's channels in Accounts and publish to another channel."
-      ]
+      ],
+      "example": "Blotato could not find this Slack channel.",
+      "customerSteps": [
+        "If it is a private channel, run /invite @Blotato in the channel, then publish again.",
+        "Otherwise, review the workspace's channels under Accounts and publish to another channel."
+      ],
+      "customerWhy": "Either the channel does not exist, or it is a private channel that the Blotato app has not been invited to."
     },
     {
       "id": "slack-app-not-in-private-channel",
-      "matchAny": ["not in this private slack channel"],
+      "matchAny": [
+        "not in this private slack channel"
+      ],
       "category": "destination",
       "title": "The Blotato app is not in the private Slack channel",
       "why": "Blotato can post to a private channel only after the app has been invited to it.",
       "nextSteps": [
         "Run /invite @Blotato in the channel, then publish again."
-      ]
+      ],
+      "example": "The Blotato app is not in this private Slack channel.",
+      "customerSteps": [
+        "Run /invite @Blotato in the channel, then publish again."
+      ],
+      "customerWhy": "Blotato can only post to a private channel after the app has been invited to it."
     },
     {
       "id": "slack-channel-archived",
-      "matchAny": ["this slack channel is archived"],
+      "matchAny": [
+        "this slack channel is archived"
+      ],
       "category": "destination",
       "title": "The Slack channel is archived",
       "why": "An archived channel accepts no new posts.",
       "nextSteps": [
         "Unarchive the channel in Slack, or publish to another channel."
-      ]
+      ],
+      "example": "This Slack channel is archived.",
+      "customerSteps": [
+        "Unarchive the channel in Slack, or publish to another channel."
+      ],
+      "customerWhy": "An archived channel does not accept new posts."
     },
     {
       "id": "slack-workspace-blocks-posting",
-      "matchAny": ["does not let blotato post in this channel"],
+      "matchAny": [
+        "does not let blotato post in this channel"
+      ],
       "category": "destination",
       "title": "The Slack workspace blocks Blotato from posting here",
       "why": "The workspace's settings stop the Blotato app from posting in this channel.",
       "nextSteps": [
         "Ask a workspace admin to allow it, or publish to another channel."
-      ]
+      ],
+      "example": "This Slack workspace does not let Blotato post in this channel.",
+      "customerSteps": [
+        "Ask a workspace admin to allow the Blotato app to post there, or publish to another channel."
+      ],
+      "customerWhy": "The workspace's settings stop the Blotato app from posting in this channel."
     },
     {
       "id": "slack-content-rules",
-      "matchAny": ["a slack post needs text or at least one image", "slack posts support at most 10 images"],
+      "matchAny": [
+        "a slack post needs text or at least one image",
+        "slack posts support at most 10 images"
+      ],
       "category": "content",
       "title": "The Slack post's content does not fit Slack's rules",
       "why": "A Slack post needs text, an image, or both, with at most 10 images.",
       "nextSteps": [
         "Add text or an image, or remove images until there are 10 or fewer.",
         "Then publish again."
-      ]
+      ],
+      "example": "Slack posts support at most 10 images.",
+      "customerSteps": [
+        "Add text or an image to the post, or remove images until there are 10 or fewer.",
+        "Then publish again."
+      ],
+      "customerWhy": "A Slack post needs text, an image, or both, and can have at most 10 images."
     },
     {
       "id": "slack-video-not-supported",
-      "matchAny": ["slack posts support images only"],
+      "matchAny": [
+        "slack posts support images only"
+      ],
       "category": "content",
       "title": "Slack posts cannot include video",
       "why": "Slack posts through Blotato accept text and images, not video.",
       "nextSteps": [
         "Remove every video from the post, or remove the Slack channels from its destinations."
-      ]
+      ],
+      "example": "Slack posts support images only. Video is not supported yet.",
+      "customerSteps": [
+        "Remove every video from the post, or remove the Slack channels from its destinations."
+      ],
+      "customerWhy": "Slack posts accept text and images, not video."
     },
     {
-      "id": "slack-rejected-or-undisplayable",
-      "matchAny": ["slack rejected the post", "slack could not display this post"],
-      "category": "platform-rejection",
-      "title": "Slack refused the message",
-      "why": "Slack refused the message. The docs give different steps depending on which of the two wordings you got.",
+      "id": "slack-could-not-display",
+      "matchAny": [
+        "slack could not display this post"
+      ],
+      "category": "media",
+      "title": "Slack could not display the post",
+      "why": "Slack refused the message because it could not display it. The docs point to the image URLs.",
       "nextSteps": [
-        "If the text is \"Slack could not display this post\": confirm every image URL opens without signing in and points to a PNG, JPEG, or GIF file, then publish again.",
-        "If the text is \"Slack rejected the post\": send Blotato support the full error and the channel."
-      ]
+        "Confirm every image URL opens without signing in and points to a PNG, JPEG, or GIF file.",
+        "Then publish again."
+      ],
+      "example": "Slack could not display this post.",
+      "customerSteps": [
+        "Check that every image URL opens without signing in and points to a PNG, JPEG, or GIF file.",
+        "Then publish again."
+      ],
+      "customerWhy": "Slack could not display the post."
+    },
+    {
+      "id": "slack-rejected",
+      "matchAny": [
+        "slack rejected the post"
+      ],
+      "category": "platform-rejection",
+      "title": "Slack rejected the post",
+      "why": "Slack refused the message. The docs give no customer-side fix for this wording; they ask for the full error and the channel to be sent to support.",
+      "nextSteps": [
+        "Collect the full error and the Slack channel, and escalate to the technical team."
+      ],
+      "example": "Slack rejected the post.",
+      "handledBySupport": true,
+      "customerWhy": "Slack refused the message."
     }
   ]
 }

@@ -91,7 +91,7 @@ function addFact(list, label, valueNode) {
   list.append(el('dt', { text: label }), el('dd', {}, [valueNode]));
 }
 
-function renderFacts(facts) {
+function renderFacts(facts, diagnosis) {
   const list = el('dl', { className: 'facts' });
   if (facts.postSubmissionId) addFact(list, 'Submission ID', el('code', { text: facts.postSubmissionId }));
   if (facts.status) addFact(list, 'Status from Blotato', el('code', { text: facts.status }));
@@ -100,6 +100,8 @@ function renderFacts(facts) {
   if (facts.httpStatus !== null && facts.httpStatus !== undefined) {
     addFact(list, 'HTTP status', el('code', { text: String(facts.httpStatus) }));
   }
+  if (diagnosis.apiRequestId) addFact(list, 'Request ID (reqId)', el('code', { text: diagnosis.apiRequestId }));
+  if (diagnosis.apiSubscriptionStatus) addFact(list, 'Subscription status', el('code', { text: diagnosis.apiSubscriptionStatus }));
   return list;
 }
 
@@ -114,10 +116,13 @@ async function copyText(text, textarea) {
   }
 }
 
-function renderReply(replyText) {
+function renderReply(diagnosis) {
+  const reply = diagnosis.customerReply;
+  const holding = reply.kind === 'holding';
+
   const textarea = el('textarea');
-  textarea.value = replyText;
-  textarea.setAttribute('aria-label', 'Support reply draft');
+  textarea.value = reply.text;
+  textarea.setAttribute('aria-label', holding ? 'Holding reply draft' : 'Customer reply draft');
 
   const status = el('span', { className: 'copy-status' });
   status.setAttribute('role', 'status');
@@ -129,14 +134,23 @@ function renderReply(replyText) {
     status.textContent = copied ? 'Copied.' : 'Could not copy. Select the text and copy it by hand.';
   });
 
-  return el('section', { className: 'panel reply' }, [
+  const section = el('section', { className: 'panel reply' }, [
     el('div', { className: 'reply-header' }, [
-      el('h3', { text: 'Support reply draft' }),
+      el('h3', { text: holding ? 'Holding reply for the customer (optional)' : 'Reply draft for the customer' }),
       el('div', {}, [status, copyButton]),
     ]),
+  ]);
+  if (diagnosis.replyNote) {
+    section.append(el('p', { className: 'caveat', text: diagnosis.replyNote }));
+  }
+  if (reply.beforeSending.length > 0) {
+    section.append(el('ul', { className: 'reminders' }, reply.beforeSending.map((text) => el('li', { text }))));
+  }
+  section.append(
     textarea,
     el('p', { className: 'hint', text: 'A starting point. You can edit it here before copying. Read it before you send it.' }),
-  ]);
+  );
+  return section;
 }
 
 function renderResult(data) {
@@ -155,7 +169,7 @@ function renderResult(data) {
   card.append(
     el('span', { className: 'pill', text: PILL_LABELS[diagnosis.outcome] ?? diagnosis.outcome }),
     el('h2', { text: diagnosis.headline }),
-    renderFacts(diagnosis.facts),
+    renderFacts(diagnosis.facts, diagnosis),
     el('h3', { text: 'What happened' }),
     el('p', { text: diagnosis.whatHappened }),
   );
@@ -166,16 +180,22 @@ function renderResult(data) {
       el('pre', { className: 'original-error', text: diagnosis.originalError }),
     );
   }
+  if (diagnosis.apiSuggestedAction) {
+    card.append(
+      el('h3', { text: 'Action suggested by Blotato' }),
+      el('pre', { className: 'original-error', text: diagnosis.apiSuggestedAction }),
+    );
+  }
   if (diagnosis.why) {
     card.append(el('h3', { text: 'Why' }), el('p', { text: diagnosis.why }));
   }
   if (diagnosis.caveat) {
     card.append(el('p', { className: 'caveat', text: diagnosis.caveat }));
   }
-  if (diagnosis.nextSteps.length > 0) {
+  if (diagnosis.agentSteps.length > 0) {
     card.append(
-      el('h3', { text: 'What to do next' }),
-      el('ol', { className: 'steps' }, diagnosis.nextSteps.map((step) => el('li', { text: step }))),
+      el('h3', { text: 'What you (the support agent) should do' }),
+      el('ol', { className: 'steps' }, diagnosis.agentSteps.map((step) => el('li', { text: step }))),
     );
   }
   const links = diagnosis.links.filter((link) => isWebUrl(link.url));
@@ -187,7 +207,7 @@ function renderResult(data) {
   }
   nodes.push(card);
 
-  nodes.push(renderReply(diagnosis.supportReply));
+  nodes.push(renderReply(diagnosis));
 
   nodes.push(el('details', {}, [
     el('summary', { text: 'Raw response this diagnosis is based on' }),
