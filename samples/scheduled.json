@@ -1,0 +1,15 @@
+{
+  "id": "scheduled",
+  "label": "Scheduled for later",
+  "origin": "docs-verbatim",
+  "note": "Response body copied from the scheduled-result example in the 'Schedule and manage posts' section of the API reference for agents.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "123e4567-e89b-12d3-a456-426614174000",
+      "status": "scheduled",
+      "scheduledTime": "2030-06-15T15:00:00Z"
+    }
+  }
+}

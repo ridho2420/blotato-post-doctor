@@ -1,0 +1,15 @@
+{
+  "id": "failed-video-too-long",
+  "label": "Failed: video too long for automatic conversion",
+  "origin": "docs-composed",
+  "note": "Documented 'Failed' response shape, with an errorMessage text taken from the Error Reference page (the number 185 is made up). The docs say the real message also lists the platform requirement that could not be fixed. Not a captured real response.",
+  "sourceUrl": "https://help.blotato.com/support/errors",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "failed",
+      "errorMessage": "This video is 185 seconds long, but we can only automatically fix videos up to 120 seconds"
+    }
+  }
+}

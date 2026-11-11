@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blotato Post Doctor</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; line-height: 1.5; }
+    li { margin: 6px 0; }
+    small { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Blotato Post Doctor</h1>
+  <p>
+    Temporary page. The real interface is not built yet.
+    For now, each link below opens the raw diagnosis (JSON) for one built-in sample.
+  </p>
+  <ul id="samples"><li>Loading samples...</li></ul>
+
+  <script>
+    fetch('/api/samples')
+      .then((response) => response.json())
+      .then(({ samples }) => {
+        const list = document.getElementById('samples');
+        list.textContent = '';
+        for (const sample of samples) {
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = '/api/diagnose?mode=sample&id=' + encodeURIComponent(sample.id);
+          link.textContent = sample.label;
+          const origin = document.createElement('small');
+          origin.textContent = ' (' + sample.origin + ')';
+          item.append(link, origin);
+          list.append(item);
+        }
+      })
+      .catch(() => {
+        document.getElementById('samples').textContent = 'Could not load samples. Is the server running?';
+      });
+  </script>
+</body>
+</html>

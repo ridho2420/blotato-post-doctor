@@ -1,0 +1,11 @@
+{
+  "id": "http-401",
+  "label": "HTTP 401: API key rejected",
+  "origin": "docs-composed",
+  "note": "The docs say a request without a valid API key is rejected with a 401. They do not show the response body for this endpoint, so the body here is left empty on purpose.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/start",
+  "response": {
+    "httpStatus": 401,
+    "body": null
+  }
+}

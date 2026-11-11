@@ -1,0 +1,14 @@
+{
+  "id": "http-429",
+  "label": "HTTP 429: too many requests",
+  "origin": "docs-composed",
+  "note": "The docs list a 60 requests/minute limit for Get Post. The body below is the 429 example the docs show for OTHER endpoints (media upload, visual creation); the docs do not show a 429 body for Get Post itself.",
+  "sourceUrl": "https://help.blotato.com/api-and-mcp-concepts/rate-limits",
+  "response": {
+    "httpStatus": 429,
+    "body": {
+      "statusCode": 429,
+      "message": "Rate limit exceeded, retry in 49 seconds"
+    }
+  }
+}

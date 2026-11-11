@@ -1,0 +1,15 @@
+{
+  "id": "failed-unrecognized",
+  "label": "Failed: error text this tool does not recognize",
+  "origin": "invented",
+  "note": "Documented 'Failed' response shape with an INVENTED errorMessage. It exists only to show what the tool does when an error is not in its catalog: it shows the original text and does not guess a cause.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm#get-post-v2-posts-postsubmissionid",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "failed",
+      "errorMessage": "Example error text that is not in the catalog (ref: demo-0001)"
+    }
+  }
+}

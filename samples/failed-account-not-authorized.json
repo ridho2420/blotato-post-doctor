@@ -1,0 +1,15 @@
+{
+  "id": "failed-account-not-authorized",
+  "label": "Failed: account no longer authorized (Instagram/Facebook)",
+  "origin": "docs-composed",
+  "note": "Documented 'Failed' response shape, with an errorMessage text taken from the Error Reference page. Not a captured real response.",
+  "sourceUrl": "https://help.blotato.com/support/errors",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "failed",
+      "errorMessage": "The user has not authorized application"
+    }
+  }
+}

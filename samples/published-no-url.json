@@ -1,0 +1,14 @@
+{
+  "id": "published-no-url",
+  "label": "Published (no public URL returned)",
+  "origin": "docs-composed",
+  "note": "The docs say publicUrl is optional on a published result. This sample is the documented 'Published' shape with that field left out.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm#get-post-v2-posts-postsubmissionid",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "published"
+    }
+  }
+}

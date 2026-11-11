@@ -1,0 +1,15 @@
+{
+  "id": "scheduled-past",
+  "label": "Scheduled, but the time has already passed",
+  "origin": "docs-verbatim",
+  "note": "Response body copied from the 'Scheduled' example in the Get Post reference. Its example date (March 2025) is now in the past, which makes it a useful edge case: the tool points that out instead of saying everything is fine.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm#get-post-v2-posts-postsubmissionid",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "scheduled",
+      "scheduledTime": "2025-03-10T15:30:00Z"
+    }
+  }
+}

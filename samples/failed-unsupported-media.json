@@ -1,0 +1,15 @@
+{
+  "id": "failed-unsupported-media",
+  "label": "Failed: unsupported media type",
+  "origin": "docs-verbatim",
+  "note": "Response body copied from the 'Failed' example in the Get Post reference. This is the only failed example the docs give for this endpoint.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm#get-post-v2-posts-postsubmissionid",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "failed",
+      "errorMessage": "Unsupported media type"
+    }
+  }
+}

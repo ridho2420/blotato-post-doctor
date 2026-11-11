@@ -1,0 +1,14 @@
+{
+  "name": "blotato-post-doctor",
+  "version": "0.1.0",
+  "description": "Checks a Blotato post submission and explains in plain language what happened, why, and what to do next.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20.12"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,10 @@
+# Secrets: the real API key lives in .env and must never be committed.
+.env
+.env.*
+!.env.example
+
+# Dependencies and noise
+node_modules/
+*.log
+.DS_Store
+Thumbs.db

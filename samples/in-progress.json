@@ -1,0 +1,14 @@
+{
+  "id": "in-progress",
+  "label": "In progress (or ID not found)",
+  "origin": "docs-verbatim",
+  "note": "Response body copied from the 'In Progress' example in the Get Post reference. The docs say this is also what the API returns when no record matches the ID.",
+  "sourceUrl": "https://help.blotato.com/start-with-an-ai-agent/llm#get-post-v2-posts-postsubmissionid",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "in-progress"
+    }
+  }
+}

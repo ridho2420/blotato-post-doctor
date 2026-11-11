@@ -1,0 +1,15 @@
+{
+  "id": "failed-duplicate-tweet",
+  "label": "Failed: duplicate content on X (Twitter)",
+  "origin": "docs-composed",
+  "note": "Documented 'Failed' response shape, with an errorMessage text taken from the Error Reference page. Not a captured real response.",
+  "sourceUrl": "https://help.blotato.com/support/errors",
+  "response": {
+    "httpStatus": 200,
+    "body": {
+      "postSubmissionId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "status": "failed",
+      "errorMessage": "You are not allowed to create a Tweet with duplicate content"
+    }
+  }
+}
