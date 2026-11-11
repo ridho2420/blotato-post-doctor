@@ -36,7 +36,8 @@
                placeholder="e.g. a1b2c3d4-e5f6-7890-abcd-ef1234567890">
         <p class="hint">
           The <code>postSubmissionId</code> you got back when the post was created.
-          Live mode reads your API key from the <code>.env</code> file on this computer.
+          Live mode reads the API key from the <code>.env</code> file on this computer; the key never reaches this page.
+          Each check is one read-only request, with at least 10 seconds between checks of the same ID.
         </p>
       </div>
 

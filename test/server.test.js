@@ -55,12 +55,6 @@ test('a missing id gives a 400', async () => {
   assert.equal(status, 400);
 });
 
-test('live mode says clearly that it is not built yet', async () => {
-  const { status, data } = await getJson('/api/diagnose?mode=live&id=a1b2c3d4-e5f6-7890-abcd-ef1234567890');
-  assert.equal(status, 501);
-  assert.match(data.error, /not built yet/);
-});
-
 test('the home page is served', async () => {
   const response = await fetch(baseUrl + '/');
   assert.equal(response.status, 200);

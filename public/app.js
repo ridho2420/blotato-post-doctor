@@ -157,6 +157,13 @@ function renderResult(data) {
   const { diagnosis, sample, raw } = data;
   const nodes = [];
 
+  if (data.mode === 'live') {
+    nodes.push(el('p', { className: 'sample-banner' }, [
+      el('strong', { text: 'Live result from the Blotato API. ' }),
+      document.createTextNode(`Checked at ${data.checkedAt.replace('T', ' ').slice(0, 19)} UTC.`),
+    ]));
+  }
+
   if (sample) {
     nodes.push(el('p', { className: 'sample-banner' }, [
       el('strong', { text: `Sample (${ORIGIN_LABELS[sample.origin] ?? sample.origin}). ` }),
@@ -216,7 +223,32 @@ function renderResult(data) {
 
   resultBox.replaceChildren(...nodes);
   resultBox.hidden = false;
+
+  // Show the whole draft without an inner scrollbar, so it can be read in full before copying.
+  const textarea = resultBox.querySelector('.reply textarea');
+  if (textarea) textarea.style.height = `${textarea.scrollHeight + 4}px`;
 }
+
+// ---------- Live mode: at least 10 seconds between checks of the same ID ----------
+
+const LIVE_WAIT_SECONDS = 10;
+let cooldown = { id: null, until: 0 };
+
+function startCooldown(id, seconds) {
+  cooldown = { id, until: Date.now() + seconds * 1000 };
+  updateButton();
+}
+
+function updateButton() {
+  if (checkButton.dataset.busy === '1') return;
+  const left = Math.ceil((cooldown.until - Date.now()) / 1000);
+  const waiting = currentMode() === 'live' && idInput.value.trim() === cooldown.id && left > 0;
+  checkButton.disabled = waiting;
+  checkButton.textContent = waiting ? `Check again in ${left} s` : 'Check post';
+}
+
+setInterval(updateButton, 1000);
+idInput.addEventListener('input', updateButton);
 
 async function checkPost(event) {
   event.preventDefault();
@@ -230,10 +262,16 @@ async function checkPost(event) {
   }
 
   checkButton.disabled = true;
+  checkButton.dataset.busy = '1';
   checkButton.textContent = 'Checking...';
   try {
-    const response = await fetch(`/api/diagnose?mode=${encodeURIComponent(mode)}&id=${encodeURIComponent(id)}`);
+    const response = await fetch(`/api/diagnose?mode=${encodeURIComponent(mode)}&id=${encodeURIComponent(id)}`, {
+      headers: { 'X-Post-Doctor': '1' },
+    });
     const data = await response.json();
+    if (mode === 'live' && (response.ok || response.status === 429)) {
+      startCooldown(id, data.retryAfterSeconds ?? LIVE_WAIT_SECONDS);
+    }
     if (!response.ok || !data.diagnosis) {
       showMessage(data.error ?? `The server answered with an error (HTTP ${response.status}).`);
       return;
@@ -242,8 +280,9 @@ async function checkPost(event) {
   } catch {
     showMessage('Could not reach the local server. Is it still running? (npm start)');
   } finally {
+    delete checkButton.dataset.busy;
     checkButton.disabled = false;
-    checkButton.textContent = 'Check post';
+    updateButton();
   }
 }
 
@@ -251,6 +290,7 @@ for (const radio of form.elements.mode) {
   radio.addEventListener('change', () => {
     updateModeFields();
     clearOutput();
+    updateButton();
   });
 }
 form.addEventListener('submit', checkPost);
