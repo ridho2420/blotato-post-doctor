@@ -70,13 +70,14 @@ Each diagnosis has `agentSteps` for the card and a separate `customerReply` for 
 - **No tool or agent wording.** Nothing about `.env`, HTTP codes, Logs, the Error Reference, "the docs say", or "contact support" (the reply *is* support).
 - **No made-up fixes.** For a known error, the customer's steps come only from the official Error Reference. When the official fix is something only support can do, the entry is marked `handledBySupport`, and the draft says support is handling it.
 - **No guessed causes.** An error that is not in the catalog is quoted exactly and passed to the technical team. The draft asks the customer not to resubmit, and asks for the platform, media type, and time.
+- **Questions after an escalation say why.** When a draft says the case was passed to the technical team and then asks the customer something, it names what was passed (the submission ID and the exact error) and says the questions are to help the team.
 - **A failed check is not a diagnosis.** If the status check itself fails (HTTP error or network error), there is no diagnosis draft. There is only an optional holding reply that names no cause.
-- **Every promise gets a reminder.** If a draft says "I have passed the details to our technical team", "We are looking into it", or "We will update you", the agent sees a "Before sending" reminder to actually do it first. No draft promises a response time.
+- **Every promise gets a reminder.** If a draft says "I have passed ... to our technical team", "We are looking into it", or "We will update you", the agent sees a "Before sending" reminder to actually do it first. No draft promises a response time.
 - **Time zones are flagged.** Scheduled times are shown in UTC, and the agent is reminded to convert them.
 
 ## How the reply drafts were reviewed
 
-Automated tests (85 in total) guard the rules above for every draft the app can produce: one per sample and one per catalog entry. For example, the tests check:
+Automated tests (86 in total) guard the rules above for every draft the app can produce: one per sample and one per catalog entry. For example, the tests check:
 
 - no forbidden wording;
 - every promise has a reminder;
@@ -87,6 +88,7 @@ Automated tests (85 in total) guard the rules above for every draft the app can 
 Tests only catch what someone thought to write a test for, so the drafts were also reviewed by reading them. I read the 14 sample drafts myself. The 75 catalog drafts were reviewed in a separate Claude chat that had not written them, and I decided which findings to fix. The biggest finding, that drafts told customers to do the agent's work, was mine: the first version gave the customer the same steps as the agent, so drafts told customers to open Logs, check the app's `.env` file, and "contact Blotato support". The reviews also caught:
 
 - a draft that asked for the submission ID right after saying "we are looking into it";
+- drafts that said "I have passed the details to our technical team" and then asked the customer for details, which made the customer wonder why;
 - "the docs say" phrasing in customer text;
 - defensive wording such as "I do not want to guess";
 - sentences that appeared twice in one draft;
@@ -144,4 +146,4 @@ docs/screenshots/         the two screenshots above
 
 ## How I built this
 
-I built this with Claude (Anthropic) as my pair programmer, working in Claude Code. Claude wrote most of the code, the error catalog, the customer reply drafts, the 85 tests and this README, and read Blotato's documentation through the blotato-docs MCP server. I made the product decisions: a diagnosis tool for support agents rather than a post scheduler; explaining errors with a fixed catalog built from the Error Reference, with no AI; never guessing at an error the catalog does not know; separating the agent card from the customer draft, after I found that the drafts told customers to do the agent's work; a "Before sending" reminder for every promise a draft makes; and following Blotato's documentation for the Pinterest link workaround, after asking for a check against the source. I set up Claude Code and the blotato-docs MCP server, tried the app in the browser, and ran the tests. I read every sample draft myself and had the catalog drafts reviewed in a separate Claude chat; both found wording the tests had missed.
+I built this with Claude (Anthropic) as my pair programmer, working in Claude Code. Claude wrote most of the code, the error catalog, the customer reply drafts, the 86 tests and this README, and read Blotato's documentation through the blotato-docs MCP server. I made the product decisions: a diagnosis tool for support agents rather than a post scheduler; explaining errors with a fixed catalog built from the Error Reference, with no AI; never guessing at an error the catalog does not know; separating the agent card from the customer draft, after I found that the drafts told customers to do the agent's work; a "Before sending" reminder for every promise a draft makes; and following Blotato's documentation for the Pinterest link workaround, after asking for a check against the source. I set up Claude Code and the blotato-docs MCP server, tried the app in the browser, and ran the tests. I read every sample draft myself and had the catalog drafts reviewed in a separate Claude chat; both found wording the tests had missed.

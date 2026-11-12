@@ -108,6 +108,22 @@ test('a draft that promises an action comes with a reminder to do it first', () 
   assert.ok(draftsWithPromises > 0, 'expected at least one draft with a promise');
 });
 
+test('a draft that says it passed the case on and then asks a question names what it passed and why it asks', () => {
+  // "I have passed the details" followed by questions reads as a contradiction:
+  // if the details were passed on, why ask? The draft must say what was passed,
+  // and the next paragraph must say the questions are there to help the team.
+  let checked = 0;
+  for (const reply of allReplies()) {
+    const paragraphs = reply.text.split('\n\n');
+    const index = paragraphs.findIndex((paragraph) => /passed .* to our technical team/i.test(paragraph));
+    if (index === -1 || !paragraphs.slice(index + 1).some((paragraph) => /\?|could you tell me/i.test(paragraph))) continue;
+    checked += 1;
+    assert.match(paragraphs[index], /passed your submission ID( and the exact error)? to our technical team/, reply.name);
+    assert.match(paragraphs[index + 1], /^To help them, could you tell me/, reply.name);
+  }
+  assert.ok(checked >= 3, `expected at least 3 drafts that pass the case on and ask, found ${checked}`);
+});
+
 test('no draft makes a commitment the reminder system does not know about', () => {
   // Any sentence where support says it did, is doing, or will do something
   // must be one of the known promises (which all carry reminders).
@@ -146,7 +162,7 @@ test('unknown error: acknowledges, quotes, escalates, asks not to resend, asks f
   assert.match(text, /sorry your post did not go through/i);
   assert.ok(text.includes(`"${message}"`));
   assert.match(text, /We do not know the cause yet\./);
-  assert.match(text, /passed the details to our technical team/i);
+  assert.match(text, /I have passed your submission ID and the exact error to our technical team\.\n\nTo help them, could you tell me:/);
   assert.match(text, /please do not submit the same post again/i);
   assert.match(text, /Which platform/i);
   assert.match(text, /kind of media/i);
@@ -217,7 +233,7 @@ test('handled-by-support entries say so and give the customer no fix-it list', (
     const text = d.customerReply.text;
     assert.equal(d.handledBySupport, true, entry.id);
     assert.match(text, /We need to look at this on our side before suggesting a fix./, entry.id);
-    assert.match(text, /passed the details to our technical team/i, entry.id);
+    assert.match(text, /passed (the details|your submission ID and the exact error) to our technical team/i, entry.id);
     assert.match(text, /please do not submit the same post again/i, entry.id);
     assert.doesNotMatch(text, /What you can do:/, entry.id);
   }

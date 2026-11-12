@@ -134,7 +134,7 @@
       "example": "Invalid account credentials",
       "handledBySupport": true,
       "customerWhy": "The credentials for the social account used for this post were reported as invalid.",
-      "customerAsk": "Could you tell me which social account you were posting to, and on which platform?"
+      "customerAsk": "To help them, could you tell me which social account you were posting to, and on which platform?"
     },
     {
       "id": "media-video-too-long-to-convert",
